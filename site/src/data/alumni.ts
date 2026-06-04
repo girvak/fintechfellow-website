@@ -97,7 +97,7 @@ export const alumni: Alumni[] = [
     cohortId: '1',
     cohort: 'Fellow 1.0',
     quote:
-      "Liseden sonra École 42'ye girdim ve Yönetim Bilişim Sistemleri'ne kaydoldum. 42'nin hiyerarşisiz ve esnek yapısı öz disiplinimi geliştirirken, yaşadığım deneyim yeni teknolojileri öğrenme hızımı artırdı. GİRVAK Fintech Fellow programı ise bana güçlü bir network ve vizyon katarak dönüm noktam oldu. Bu yenilikçi süreçler sayesinde gelişen teknik ve iletişim becerilerim, bugün çalıştığım yerde takdir görüyor.",
+      "Liseden sonra 42 İstanbul'a girdim ve Yönetim Bilişim Sistemleri'ne kaydoldum. 42 İstanbul'un hiyerarşisiz ve esnek yapısı öz disiplinimi geliştirirken, yaşadığım deneyim yeni teknolojileri öğrenme hızımı artırdı. Fintech Fellow Programı ise bana güçlü bir network ve vizyon katarak dönüm noktam oldu. Bu yenilikçi süreçler sayesinde gelişen teknik ve iletişim becerilerim, bugün çalıştığım yerde takdir görüyor.",
     before: 'Yönetim Bilişim Sistemleri',
     after: 'Software Engineer',
     pathKey: 'mis',
@@ -115,7 +115,7 @@ export const alumni: Alumni[] = [
     cohortId: '1',
     cohort: 'Fellow 1.0',
     quote:
-      'Yazılım öğrenmeye kendi başıma çalışırken École 42 ile tanıştım. Eğitim sürecimde dahil olduğum Fintech Fellow Programı ise kariyerimde önemli bir dönüm noktası oldu. Programın sağladığı burs, staj ve istihdam olanakları sayesinde eğitimime tam anlamıyla odaklanma fırsatı buldum. Eğitimimi tamamladıktan sonra ilk yazılım işime başlayarak profesyonel kariyerime adım attım. Kazandığım teknik bilgi, problem çözme yaklaşımı ve öğrenmeyi öğrenme bakış açısı, bugün de kendimi sürekli geliştirmeme katkı sağlıyor.',
+      'Yazılım öğrenmeye kendi başıma çalışırken 42 İstanbul ile tanıştım. Eğitim sürecimde dahil olduğum Fintech Fellow Programı ise kariyerimde önemli bir dönüm noktası oldu. Programın sağladığı burs, staj ve istihdam olanakları sayesinde eğitimime tam anlamıyla odaklanma fırsatı buldum. Eğitimimi tamamladıktan sonra ilk yazılım işime başlayarak profesyonel kariyerime adım attım. Kazandığım teknik bilgi, problem çözme yaklaşımı ve öğrenmeyi öğrenme bakış açısı, bugün de kendimi sürekli geliştirmeme katkı sağlıyor.',
     before: 'Yönetim Bilişim Sistemleri',
     after: 'Software Engineer',
     pathKey: 'mis',
@@ -133,7 +133,7 @@ export const alumni: Alumni[] = [
     cohortId: '1',
     cohort: 'Fellow 1.0',
     quote:
-      'İnşaat mühendisliği mezunu olarak yazılım dünyasına geçişimde Fintech Fellow programı gerçek bir dönüm noktası oldu. Hem teknik hem sosyal becerilerimi büyük ölçüde geliştirdi; öğrenmeyi öğrenme felsefesi sayesinde iş hayatında yeni teknolojilere kolayca adapte olabiliyorum.',
+      'İnşaat mühendisliği mezunu olarak yazılım dünyasına geçişimde Fintech Fellow Programı gerçek bir dönüm noktası oldu. Hem teknik hem sosyal becerilerimi büyük ölçüde geliştirdi; öğrenmeyi öğrenme felsefesi sayesinde iş hayatında yeni teknolojilere kolayca adapte olabiliyorum.',
     before: 'İnşaat mühendisliği',
     after: 'Software Engineer',
     pathKey: 'civil',

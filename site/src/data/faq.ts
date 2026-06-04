@@ -21,7 +21,7 @@ export const homepageFaqGroups: FaqGroup[] = [
       },
       {
         q: 'Başvuru süreci nasıl işliyor?',
-        a: 'Önce apply.42istanbul.com.tr üzerinde 42 Türkiye havuz eğitimine başvurursun: hesap oluşturma, online testler ve tanışma toplantısı. Ardından Fintech Fellow başvuru formunu doldurursun. Havuz eğitimini tamamlayanlar Kickoff ile ana eğitime geçer; Fellow seçiminde kişilik envanteri ve online mülakat uygulanır. Nihai sonuçlar Kasım 2026 itibarıyla açıklanacaktır.',
+        a: "Fintech Fellow Programı'na katılabilmek için öncelikle 42 İstanbul kampüsünde Ana Eğitim'e başlamaya hak kazanman gerekir. Bunun için 42 Türkiye başvuru sürecini tamamlayarak Havuz Eğitimi'nde başarılı olmalı ve Ana Eğitim'e kabul edilmelisin. Başvuru süreci apply.42istanbul.com.tr üzerinden hesap oluşturmanla başlar. Ardından online testleri tamamlar ve tanışma toplantısına katılırsın. Sonrasında 42 İstanbul Havuz Eğitimi'ne katılarak 42'nin eğitim modelini deneyimlersin.\n\nHavuz Eğitimi'ni başarıyla tamamlayarak Ana Eğitime başlayan öğrenciler Fintech Fellow Programı'na başvurabilir. Programın değerlendirme sürecinde kişilik envanteri ve online mülakat uygulanır. Nihai sonuçlar Kasım 2026'da açıklanacaktır.",
         cta: { href: '/basvur', label: 'Adım Adım Takvimi Gör' },
       },
       {
@@ -50,6 +50,10 @@ export const homepageFaqGroups: FaqGroup[] = [
         q: '42 Türkiye Havuz Eğitimi Nedir?',
         a: "Havuz Eğitimi, 42 Türkiye'nin seçim sürecidir.\n\nYaklaşık 26 gün süren bu yoğun deneyimde adaylar, eğitmensiz ve akran öğrenimine dayalı eğitim modelini deneyimler. Gerçek projeler üzerinde çalışır, problem çözme becerilerini geliştirir ve 42'nin öğrenme kültürünü yakından tanır. Süreci başarıyla tamamlayan adaylar Ana Eğitim'e geçiş yaparak 42 Türkiye öğrencisi olmaya hak kazanır.",
         cta: { href: 'https://42istanbul.com.tr', label: "42 Türkiye'yi detaylı incele!" },
+      },
+      {
+        q: 'Program online mı, yüz yüze mi?',
+        a: "42 Türkiye'nin eğitim modeli yüz yüze kampüs deneyimine dayanır. Fintech Fellow Programı kapsamında yer alan Havuz Eğitimi ve Ana Eğitim süreçleri 42 İstanbul kampüsünde yüz yüze olarak gerçekleştirilir.\n\nArdından dahil olacağınız Fintech Fellow programı kapsamındaki bazı mentorlük görüşmeleri, etkinlikler ve buluşmalar ise hibrit veya online olarak düzenlenebilir.",
       },
       {
         q: 'Programda mentorlük ve sektör buluşmaları var mı?',

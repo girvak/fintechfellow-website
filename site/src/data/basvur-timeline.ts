@@ -126,11 +126,11 @@ export const timelineSteps: TimelineStep[] = [
   {
     id: 'main-edu',
     stepLabel: 'Adım 4',
-    title: 'Kickoff İle Ana Eğitime Başla',
+    title: '42 İstanbul\'da Ana Eğitime Başla',
     dateLabel: 'Başlangıç',
     date: '3 Ağustos 2026',
     description:
-      'Havuz eğitimini başarıyla tamamladıktan sonra Kickoff ile 42 Türkiye ana müfredatına geçersin. Proje bazlı eğitim dönemi burada başlar.',
+      "Havuz Eğitimi'ni başarıyla tamamlayan adaylar, 42 İstanbul'da Ana Eğitime başlar. Bu aşamada öğrenciler, proje tabanlı eğitim modeliyle yazılım geliştirme yolculuklarını sürdürür ve 42 müfredatında ilerlemeye başlar.",
   },
   {
     id: 'assessment',
@@ -158,15 +158,16 @@ export const timelineSteps: TimelineStep[] = [
   {
     id: 'graduate',
     stepLabel: 'Adım 7',
-    title: '42 Türkiye Eğitimini Tamamla Ve Mezun Ol',
-    dateLabel: 'Mezuniyet',
+    title: '42 Türkiye Ana Eğitimini Tamamla',
+    dateLabel: 'Eğitim Tamamlama',
     date: '3 Ağustos 2027',
-    description: '42 Türkiye eğitim sürecini tamamladıktan sonra mezun oluyorsun.',
+    description:
+      '42 Türkiye Ana Eğitim sürecini tamamlayarak program boyunca edindiğin teknik ve sosyal yetkinlikleri pekiştirir ve sektör deneyimine hazır hale gelirsin.',
   },
   {
     id: 'career',
     stepLabel: 'Adım 8',
-    title: 'Ödeal\'da Tam Zamanlı Çalışmaya Başla',
+    title: 'Ödeal\'da Tam Zamanlı Kariyer Yolculuğuna Başla',
     description: 'Mezuniyet sonrası Ödeal\'da kariyerin başlıyor.',
     variant: 'finale',
   },

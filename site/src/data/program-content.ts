@@ -36,17 +36,17 @@ export type ProgramContentItem = {
 export const programContentItems: ProgramContentItem[] = [
   {
     id: 'code',
-    tabLabel: "42 İstanbul'da Yazılım Eğitimi",
+    tabLabel: "42 Türkiye'da Yazılım Eğitimi",
     tone: 'blue',
     heading: 'Yazılımı Üreterek Öğren',
-    body: "42 İstanbul'da öğrenme, gerçek projeler ve akran öğrenimi modeliyle ilerler. Algoritmalar, veri yapıları ve sistem programlama gibi alanlarda çalışırken teknik yetkinliklerini geliştirir, problem çözmeyi deneyimleyerek öğrenirsin. Eğitmen odaklı dersler yerine üreterek ilerler, akranlarından öğrenir ve kendi öğrenme yöntemini keşfedersin.",
+    body: "42 Türkiye'da öğrenme, gerçek projeler ve akran öğrenimi modeliyle ilerler. Algoritmalar, veri yapıları ve sistem programlama gibi alanlarda çalışırken teknik yetkinliklerini geliştirir, problem çözmeyi deneyimleyerek öğrenirsin. Eğitmen odaklı dersler yerine üreterek ilerler, akranlarından öğrenir ve kendi öğrenme yöntemini keşfedersin.",
     bullets: [
       'Sıfırdan ileri seviyeye C, Python, Shell ve ağ programlama',
       'Algoritma ve veri yapıları üzerine gerçek projeler',
       'Akran değerlendirmesiyle sürekli geri bildirim',
       'Kendi ritminde eğitim',
     ],
-    visual: { tone: 'blue', title: '42 İstanbul', sub: 'Yazılım Eğitimi', icon: 'code' },
+    visual: { tone: 'blue', title: '42 Türkiye', sub: 'Yazılım Eğitimi', icon: 'code' },
   },
   {
     id: 'fintech',
@@ -80,7 +80,7 @@ export const programContentItems: ProgramContentItem[] = [
     tabLabel: 'Birebir Mentörlük',
     tone: 'green',
     heading: 'Birebir Mentörlük + Job Shadowing',
-    body: "Eğitim sürecinde Ödeal ekibinden mentorlar ve sektör profesyonelleriyle birebir mentörlük görüşmelerine ve grup buluşmalarına katılarak hem Ödeal kültürünü yakından tanıyabilir hem de 42 İstanbul süreçlerine dair profesyonel rehberlik alabilirsin.",
+    body: "Eğitim sürecinde Ödeal ekibinden mentorlar ve sektör profesyonelleriyle birebir mentörlük görüşmelerine ve grup buluşmalarına katılarak hem Ödeal kültürünü yakından tanıyabilir hem de 42 Türkiye süreçlerine dair profesyonel rehberlik alabilirsin.",
     bullets: [
       'Ödeal ekibinden mentorlar ve sektör profesyonelleriyle birebir mentörlük görüşmelerine katılabilirsin',
       'Düzenli grup buluşmalarıyla gelişimini takip edebilir ve geri bildirim alabilirsin',

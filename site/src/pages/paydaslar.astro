@@ -18,7 +18,7 @@ const partners = [
     lead: "Ödeal, Türkiye'nin önde gelen finansal teknoloji şirketlerinden biri. Ödeme sistemleri, kurumsal finans çözümleri ve dijital bankacılık altyapısı alanlarında faaliyet gösteriyor.",
     body: "Fintech Fellow Programı'nın ana sponsoru ve mezunların işvereni olan Ödeal, aylık 20.000 TL bursu ve iş garantisini sunuyor; İK buluşmaları, workshoplar, birebir mentörlük ve job shadowing ile katılımcıların gerçek üretim ortamını yakından tanımalarını destekliyor.",
     facts: [
-      { n: '20K', l: 'TL / ay burs — program boyunca' },
+      { n: '20K', l: 'TL / ay burs — Fintech Fellow Programı boyunca' },
       { n: '%100', l: "İş garantisi — her Fellow Ödeal'da başlıyor" },
     ],
     href: 'https://odeal.com',
@@ -30,10 +30,14 @@ const partners = [
     name: '42 Türkiye',
     logo: partnerLogos.fortyTwoTurkiye,
     logoClass: 'pv-logo-img--42',
-    eyebrow: 'Yazılım Okulları',
-    lead: poolEducationCopy.title,
-    body: poolEducationCopy.description,
-    facts: [],
+    eyebrow: 'Yazılım Okulu',
+    lead: '42 Türkiye, yeni nesil yazılım okuludur.',
+    body:
+      "Akran öğrenimi – iş birliğiyle öğrenme. Havuz Eğitimi, 42 Türkiye'nin seçim sürecidir; yaklaşık 26 gün süren bu yoğun deneyimde gerçek projeler üzerinde çalışır, problem çözme becerilerini geliştirir ve 42'nin öğrenme kültürünü yakından tanırsın. Süreci başarıyla tamamlayan adaylar Ana Eğitim'e geçiş yaparak 42 Türkiye öğrencisi olmaya hak kazanır.",
+    facts: [
+      { n: 'Akran', l: 'Öğrenimi – iş birliğiyle öğrenme modeli' },
+      { n: 'Üret', l: 'Teori değil proje — öğrenerek ilerle' },
+    ],
     href: poolEducationCopy.portal.href,
     linkLabel: poolEducationCopy.portal.label,
     reverse: true,
@@ -61,7 +65,7 @@ const partners = [
 
 <Base
   title="Hakkımızda — FintechFellow"
-  description="FintechFellow'u mümkün kılan üç güç: 42 İstanbul, Ödeal ve GİRVAK."
+  description="FintechFellow'u mümkün kılan üç güç: 42 Türkiye, Ödeal ve GİRVAK."
 >
   <Nav darkHero />
 
@@ -69,7 +73,7 @@ const partners = [
     <PageHero eyebrow="Hakkımızda">
       <Fragment slot="title">Tek Başına Değil<br /><span class="g">Üç Güçle Birlikte</span></Fragment>
       <Fragment slot="sub">
-        FintechFellow; Ödeal, 42 İstanbul ve GİRVAK iş birliğiyle hayata geçirildi.<br />
+        FintechFellow; Ödeal, 42 Türkiye ve GİRVAK iş birliğiyle hayata geçirildi.<br />
         Her biri farklı bir gücü masaya getiriyor.
       </Fragment>
     </PageHero>
@@ -82,7 +86,7 @@ const partners = [
         <div class="sec-eyebrow">Birlikte ne oluyor?</div>
         <h2 class="sec-title">Üç Ortak <span class="g">Tek Yolculuk</span></h2>
         <p class="sec-sub together-intro">
-          Her biri programın farklı bir parçasını üstleniyor. Bir araya gelince tam bir kariyer paketi oluşuyor.
+          Her biri Fintech Fellow Programı'nın farklı bir parçasını üstleniyor. Bir araya gelince tam bir kariyer paketi oluşuyor.
         </p>
       </div>
 
@@ -91,7 +95,7 @@ const partners = [
           <div class="together-step-logo">
             <img src={partnerLogos.fortyTwoTurkiye} alt="42 Türkiye" loading="lazy" decoding="async" />
           </div>
-          <p class="together-step-desc">Yazılım Okulları</p>
+          <p class="together-step-desc">Yazılım Okulu</p>
         </article>
 
         <article class="together-step">
@@ -109,7 +113,7 @@ const partners = [
         </article>
 
         <div class="together-outcome">
-          <p class="together-outcome-label">Program çıktısı</p>
+          <p class="together-outcome-label">Fintech Fellow Programı çıktısı</p>
           <p class="together-outcome-text">
             9 ay · yazılım · fintech · <span class="g">20K burs</span> · <span class="g">iş garantisi</span>
           </p>
@@ -306,14 +310,23 @@ const partners = [
   min-width: 80px;
 }
 
-/* 42 İstanbul bölümü — mavi aksanlar yeşil */
+/* 42 Türkiye bölümü — mavi aksanlar yeşil */
 .partner-section--42 .sec-eyebrow,
 .partner-section--42 .sec-eyebrow::before {
   color: var(--brand-green);
 }
 
+.partner-section--42 .pfact {
+  background: var(--green-50);
+  border-color: var(--green-200);
+}
+
 .partner-section--42 .pfact-n {
   color: var(--brand-green);
+}
+
+.partner-section--42 .pfact-l {
+  color: var(--ink-soft);
 }
 
 .partner-section--42 .inline-link {
