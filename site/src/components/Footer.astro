@@ -45,7 +45,9 @@ const links = [
       <span class="foot-sep" aria-hidden="true">·</span>
       <a href="/marka-kilavuzu">Marka kiti</a>
     </p>
-    <p class="foot-note">Ödeal, 42 Türkiye ve GİRVAK iş birliğiyle</p>
+    <p class="foot-tagline">
+      15 Katılımcı · <span class="foot-tagline-accent">15 Sıradışı Kariyer</span>
+    </p>
   </div>
 </footer>
 
@@ -162,11 +164,38 @@ const links = [
     color: rgba(255, 255, 255, 0.72);
   }
 
-  .foot-note {
+  .foot-tagline {
     margin: 0;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.22);
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  .foot-tagline-accent {
+    background: linear-gradient(90deg, var(--brand-blue-light), var(--brand-green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .foot-main {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+    .foot-logo,
+    .foot-links,
+    .foot-social {
+      justify-self: center;
+    }
+    .foot-links {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
   }
 
   @media (max-width: 640px) {
@@ -191,7 +220,13 @@ const links = [
     }
     .foot-meta {
       flex-direction: column;
-      gap: 6px;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+    }
+
+    .foot-tagline {
+      font-size: 12px;
     }
   }
 </style>

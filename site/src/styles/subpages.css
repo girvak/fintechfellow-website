@@ -219,7 +219,7 @@
 
 /* Bölüm zeminleri */
 .sp-section {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-section-y) 0;
 }
 
 .sp-section--warm {
@@ -232,7 +232,7 @@
 
 /* Ortak alt CTA */
 .sp-final {
-  padding: var(--space-2xl) 0;
+  padding: var(--space-section-y) 0;
   background: var(--ink);
   color: #fff;
   position: relative;
@@ -315,7 +315,7 @@
 
 /* Yasal / 404 */
 .sp-legal-body {
-  padding: clamp(56px, 8vw, 80px) 0 var(--space-2xl);
+  padding: clamp(56px, 8vw, 80px) 0 var(--space-section-y);
 }
 
 .sp-legal-inner {
@@ -405,5 +405,36 @@
 @media (max-width: 580px) {
   .sp-hero-stats {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .sp-hero {
+    padding: clamp(108px, 14vh, 128px) 0 clamp(48px, 7vh, 72px);
+  }
+
+  .sp-hero-title {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  .sp-hero-sub {
+    font-size: 16px;
+  }
+
+  .sp-final-title {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .sp-final-btn {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    min-height: 48px;
+    padding: 18px 28px;
+    font-size: 16px;
+  }
+
+  .sp-final-sub {
+    font-size: 16px;
   }
 }

@@ -60,6 +60,7 @@
   --space-lg:  64px;
   --space-xl:  96px;
   --space-2xl: 140px;
+  --space-section-y: var(--space-2xl);
 
   /* ─── Radius ─── */
   --r-sm:  8px;
@@ -70,4 +71,11 @@
 
   /* ─── Font ─── */
   --font-sans: 'Rubik', system-ui, -apple-system, sans-serif;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --space-2xl: clamp(72px, 14vw, 88px);
+    --space-section-y: clamp(72px, 14vw, 88px);
+  }
 }

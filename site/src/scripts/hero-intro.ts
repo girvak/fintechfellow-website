@@ -1,7 +1,8 @@
 import { applyViewerFraming, getViewerFraming, type ViewerFraming } from './viewer-framing';
 
 const STORAGE_KEY = 'ff_hero_intro_v1';
-const STATUS_WIDTH = 34;
+const STATUS_WIDTH_DESKTOP = 34;
+const STATUS_WIDTH_MOBILE = 22;
 
 /** Tek akış — boş string bölüm arası */
 const SCRIPT_DESKTOP = [
@@ -42,6 +43,16 @@ function isMobileFraming(framing: ViewerFraming): boolean {
   return framing.viewport === 'mobile';
 }
 
+function isCompactFraming(framing: ViewerFraming): boolean {
+  return framing.viewport === 'mobile' || framing.viewport === 'tablet';
+}
+
+function statusWidthFor(framing: ViewerFraming): number {
+  if (framing.viewport === 'mobile') return STATUS_WIDTH_MOBILE;
+  if (framing.viewport === 'tablet') return 28;
+  return STATUS_WIDTH_DESKTOP;
+}
+
 function shouldForceIntro(): boolean {
   return new URLSearchParams(location.search).get('intro') === '1';
 }
@@ -50,10 +61,10 @@ function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function formatStatusLine(label: string): string {
+function formatStatusLine(label: string, width: number): string {
   const padded = `  ${label}`;
   const suffix = ' OK';
-  const dots = Math.max(2, STATUS_WIDTH - padded.length - suffix.length);
+  const dots = Math.max(2, width - padded.length - suffix.length);
   return `${padded}${'.'.repeat(dots)}${suffix}`;
 }
 
@@ -120,13 +131,18 @@ async function runEraPhase(eraEl: HTMLElement, mobile: boolean, isSkipped: () =>
 async function showTerminalOnce(
   termPhase: HTMLElement | null,
   terminal: HTMLElement | null,
+  grid: HTMLElement | null,
   mobile: boolean,
 ): Promise<void> {
   activatePhase(termPhase);
+  termPhase?.classList.add('is-booting');
+  grid?.classList.add('is-pulse');
   await wait(40);
   terminal?.classList.add('is-open');
-  await wait(prefersReducedMotion() ? 60 : mobile ? 380 : 560);
+  await wait(prefersReducedMotion() ? 60 : mobile ? 340 : 560);
   terminal?.classList.add('is-ready');
+  termPhase?.classList.remove('is-booting');
+  window.setTimeout(() => grid?.classList.remove('is-pulse'), 1100);
 }
 
 function scrollTermToEnd(termOut: HTMLElement): void {
@@ -165,39 +181,40 @@ async function appendLine(
   }
 }
 
-function formatCountdownLine(label: string, count: number): string {
+function formatCountdownLine(label: string, count: number, width: number): string {
   const padded = `  ${label}`;
   const suffix = ` ${count}`;
-  const dots = Math.max(2, STATUS_WIDTH - padded.length - suffix.length);
+  const dots = Math.max(2, width - padded.length - suffix.length);
   return `${padded}${'.'.repeat(dots)}${suffix}`;
 }
 
 async function runRedirectCountdown(
   termOut: HTMLElement,
   mobile: boolean,
+  lineWidth: number,
   isSkipped: () => boolean,
 ): Promise<void> {
-  const typeMs = mobile ? 8 : 10;
-  const tickMs = mobile ? 620 : 760;
+  const typeMs = mobile ? 7 : 10;
+  const tickMs = mobile ? 520 : 760;
   const label = mobile ? 'redirect' : 'redirecting';
 
   await appendLine(termOut, '', 0, isSkipped);
   if (isSkipped()) return;
 
-  await appendLine(termOut, formatCountdownLine(label, 3), typeMs, isSkipped);
+  await appendLine(termOut, formatCountdownLine(label, 3, lineWidth), typeMs, isSkipped);
   if (isSkipped()) return;
   await wait(tickMs);
 
-  setLastTermLine(termOut, formatCountdownLine(label, 2));
+  setLastTermLine(termOut, formatCountdownLine(label, 2, lineWidth));
   if (isSkipped()) return;
   await wait(tickMs);
 
-  setLastTermLine(termOut, formatCountdownLine(label, 1));
+  setLastTermLine(termOut, formatCountdownLine(label, 1, lineWidth));
 }
 
-function resolveScriptLine(raw: string): string {
+function resolveScriptLine(raw: string, lineWidth: number): string {
   if (raw.startsWith('__status__')) {
-    return formatStatusLine(raw.slice('__status__'.length));
+    return formatStatusLine(raw.slice('__status__'.length), lineWidth);
   }
   return raw;
 }
@@ -213,7 +230,7 @@ function pauseAfterLine(line: string, mobile: boolean): number {
 async function runTerminalSession(
   termOut: HTMLElement,
   cursor: HTMLElement | null,
-  mobile: boolean,
+  framing: ViewerFraming,
   isSkipped: () => boolean,
 ): Promise<void> {
   termOut.textContent = '';
@@ -222,12 +239,14 @@ async function runTerminalSession(
     cursor.style.visibility = 'hidden';
   }
 
+  const mobile = isMobileFraming(framing);
   const script = mobile ? SCRIPT_MOBILE : SCRIPT_DESKTOP;
-  const typeMs = mobile ? 8 : 10;
-  const statusMs = mobile ? 6 : 8;
+  const typeMs = mobile ? 7 : 10;
+  const statusMs = mobile ? 5 : 8;
+  const lineWidth = statusWidthFor(framing);
 
   for (const raw of script) {
-    const line = resolveScriptLine(raw);
+    const line = resolveScriptLine(raw, lineWidth);
     const ms = raw.startsWith('__status__') ? statusMs : typeMs;
     await appendLine(termOut, line, ms, isSkipped);
     if (isSkipped()) return;
@@ -235,7 +254,7 @@ async function runTerminalSession(
   }
 
   if (isSkipped()) return;
-  await runRedirectCountdown(termOut, mobile, isSkipped);
+  await runRedirectCountdown(termOut, mobile, lineWidth, isSkipped);
 }
 
 async function runIntro(): Promise<void> {
@@ -280,13 +299,22 @@ async function runIntro(): Promise<void> {
     if (e.key === 'Escape') skip();
   });
 
-  const safety = window.setTimeout(skip, 16000);
+  let safety = 0;
 
   try {
     const framing = applyViewerFraming();
     const mobile = isMobileFraming(framing);
+    const compact = isCompactFraming(framing) || framing.compactHeight;
+    const grid = overlay.querySelector<HTMLElement>('.hero-intro-grid');
+
+    overlay.classList.toggle('is-viewport-mobile', mobile);
+    overlay.classList.toggle('is-viewport-tablet', framing.viewport === 'tablet');
+    overlay.classList.toggle('is-viewport-compact', compact);
+
     terminal?.classList.toggle('is-viewport-mobile', mobile);
     terminal?.classList.toggle('is-viewport-compact', framing.compactHeight);
+
+    safety = window.setTimeout(skip, mobile ? 13000 : compact ? 14500 : 16000);
 
     activatePhase(eraPhase);
     await runEraPhase(eraEl, mobile, isSkipped);
@@ -295,12 +323,12 @@ async function runIntro(): Promise<void> {
     await leavePhase(eraPhase);
     if (isSkipped()) return;
 
-    await showTerminalOnce(termPhase, terminal, mobile);
+    await showTerminalOnce(termPhase, terminal, grid, mobile);
     if (isSkipped()) return;
 
-    await runTerminalSession(termOut, cursor, mobile, isSkipped);
+    await runTerminalSession(termOut, cursor, framing, isSkipped);
   } finally {
-    window.clearTimeout(safety);
+    if (safety) window.clearTimeout(safety);
     if (!skipped) finishIntro(overlay);
   }
 }

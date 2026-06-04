@@ -1,5 +1,6 @@
 ---
 import { programContentItems, type ProgramContentIcon } from '../data/program-content';
+import ProgramContentPanelInner from './ProgramContentPanelInner.astro';
 
 interface Props {
   title: string;
@@ -29,8 +30,33 @@ const iconPaths: Record<ProgramContentIcon, string> = {
     {intro && <p class="sec-sub ff-pc-intro">{intro}</p>}
   </div>
 
-  <div class="ff-pc-layout">
-    <nav class="ff-pc-nav" aria-label="Program sekmeleri" role="tablist">
+  <div class="ff-pc-accordion" data-ff-pc-accordion>
+    {
+      programContentItems.map((item, i) => (
+        <details
+          class:list={['ff-pc-acc', `ff-pc-acc--${item.tone}`, { 'is-open': i === 0 }]}
+          open={i === 0}
+          data-acc-index={i}
+        >
+          <summary class="ff-pc-acc-summary">
+            <span class="ff-pc-acc-title">{item.tabLabelShort}</span>
+            <span class="ff-pc-acc-toggle" aria-hidden="true" />
+          </summary>
+          <div class="ff-pc-acc-collapse">
+            <div class="ff-pc-acc-body">
+              <div class="ff-pc-panel-inner">
+                <ProgramContentPanelInner item={item} />
+              </div>
+            </div>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+  <div class="ff-pc-layout ff-pc-layout--desktop">
+    <div class="ff-pc-nav-shell">
+      <nav class="ff-pc-nav" aria-label="Program sekmeleri" role="tablist">
       {
         programContentItems.map((item, i) => (
           <button
@@ -39,14 +65,17 @@ const iconPaths: Record<ProgramContentIcon, string> = {
             role="tab"
             aria-selected={i === 0}
             aria-controls={`${rootId}-panel-${i}`}
+            aria-label={item.tabLabel}
             data-tab={i}
             tabindex={i === 0 ? 0 : -1}
           >
-            <span class="ff-pc-tab-label">{item.tabLabel}</span>
+            <span class="ff-pc-tab-label ff-pc-tab-label--long">{item.tabLabel}</span>
+            <span class="ff-pc-tab-label ff-pc-tab-label--short">{item.tabLabelShort}</span>
           </button>
         ))
       }
-    </nav>
+      </nav>
+    </div>
 
     <div class="ff-pc-body">
       <div class="ff-pc-content-wrap">
@@ -58,50 +87,7 @@ const iconPaths: Record<ProgramContentIcon, string> = {
               role="tabpanel"
             >
               <div class="ff-pc-panel-inner">
-                <h3>{item.heading}</h3>
-                {item.body && <p>{item.body}</p>}
-                {item.bodySecondary && <p>{item.bodySecondary}</p>}
-                {item.bulletsLabel && <p class="ff-pc-lead">{item.bulletsLabel}</p>}
-                {item.bullets && item.bullets.length > 0 && (
-                <ul class="ff-pc-list">
-                  {item.bullets.map((bullet) => (
-                    <li>
-                      {typeof bullet === 'string' ? (
-                        bullet
-                      ) : (
-                        <>
-                          {bullet.text}
-                          {bullet.link && (
-                            <>
-                              {' — '}
-                              <a
-                                href={bullet.link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-link"
-                              >
-                                {bullet.link.label} <span aria-hidden="true">↗</span>
-                              </a>
-                            </>
-                          )}
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-                )}
-                {item.workshops?.map((workshop) => (
-                  <div class="ff-pc-block">
-                    <h4 class="ff-pc-lead">{workshop.title}</h4>
-                    <p>{workshop.body}</p>
-                  </div>
-                ))}
-                {item.callout && (
-                  <div class="ff-pc-block">
-                    <h4 class="ff-pc-lead">{item.callout.title}</h4>
-                    <p>{item.callout.body}</p>
-                  </div>
-                )}
+                <ProgramContentPanelInner item={item} />
               </div>
             </div>
           ))
@@ -144,6 +130,44 @@ const iconPaths: Record<ProgramContentIcon, string> = {
 
 <script>
   function initProgramContent(root: HTMLElement) {
+    const mobileMq = window.matchMedia('(max-width: 860px)');
+    const accordion = root.querySelector<HTMLElement>('[data-ff-pc-accordion]');
+    const accItems = accordion
+      ? Array.from(accordion.querySelectorAll<HTMLDetailsElement>('.ff-pc-acc'))
+      : [];
+
+    const syncAccOpen = (item: HTMLDetailsElement) => {
+      item.classList.toggle('is-open', item.open);
+    };
+
+    accItems.forEach((item) => syncAccOpen(item));
+
+    accItems.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        syncAccOpen(item);
+
+        if (!mobileMq.matches) return;
+
+        if (item.open) {
+          accItems.forEach((other) => {
+            if (other !== item && other.open) {
+              other.open = false;
+              syncAccOpen(other);
+            }
+          });
+
+          window.requestAnimationFrame(() => {
+            item.querySelector('.ff-pc-acc-summary')?.scrollIntoView({
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? 'auto'
+                : 'smooth',
+              block: 'nearest',
+            });
+          });
+        }
+      });
+    });
+
     const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.ff-pc-tab'));
     const panels = root.querySelectorAll<HTMLElement>('.ff-pc-panel');
     const visuals = root.querySelectorAll<HTMLElement>('.ff-pc-visual');
@@ -157,6 +181,8 @@ const iconPaths: Record<ProgramContentIcon, string> = {
       });
       panels.forEach((p, i) => p.classList.toggle('active', i === idx));
       visuals.forEach((v, i) => v.classList.toggle('active', i === idx));
+      const activeTab = tabs[idx];
+      activeTab?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     };
 
     tabs.forEach((tab, i) => {
@@ -202,6 +228,19 @@ const iconPaths: Record<ProgramContentIcon, string> = {
     margin-bottom: 0;
   }
 
+  .ff-pc-nav-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    border-right: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+
+  /* Mobil akordiyon — masaüstünde gizli */
+  .ff-pc-accordion {
+    display: none;
+  }
+
   .ff-pc-layout {
     display: grid;
     grid-template-columns: minmax(220px, 24%) minmax(0, 1fr);
@@ -225,9 +264,10 @@ const iconPaths: Record<ProgramContentIcon, string> = {
   .ff-pc-nav {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-    border-right: 1px solid var(--line);
-    background: var(--bg-soft);
+    flex: 1;
+    min-height: 0;
+    border-right: 0;
+    background: transparent;
   }
 
   .ff-pc-tab {
@@ -652,65 +692,209 @@ const iconPaths: Record<ProgramContentIcon, string> = {
     }
   }
 
+  .ff-pc-tab-label--short {
+    display: none;
+  }
+
   @media (max-width: 860px) {
-    .ff-pc-layout {
-      grid-template-columns: 1fr;
-      min-height: 0;
-      border-radius: var(--r-md);
-    }
-
-    .ff-pc-nav {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      min-height: 0;
-      overflow-x: auto;
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-
-    .ff-pc-nav::-webkit-scrollbar {
+    .ff-pc-layout--desktop {
       display: none;
     }
 
-    .ff-pc-tab {
-      flex: 0 0 auto;
-      min-width: max-content;
-      padding: 14px 16px;
-      white-space: nowrap;
+    .ff-pc-accordion {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      background: var(--bg);
+      box-shadow: 0 12px 40px rgba(14, 17, 22, 0.04);
     }
 
-    .ff-pc-tab-label {
-      font-size: 12px;
+    .ff-pc-acc {
+      border-bottom: 1px solid var(--line);
     }
 
-    .ff-pc-body {
-      grid-template-columns: 1fr;
+    .ff-pc-acc:last-child {
+      border-bottom: 0;
     }
 
-    .ff-pc-content-wrap {
-      border-right: 0;
-      padding: 28px 22px 24px;
+    .ff-pc-acc-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 18px;
+      min-height: 52px;
+      box-sizing: border-box;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      background: var(--bg-soft);
+      transition: background 0.35s cubic-bezier(0.33, 1, 0.36, 1);
     }
 
-    .ff-pc-visual-wrap {
-      min-height: 220px;
-      border-top: 1px solid var(--line);
+    .ff-pc-acc-summary::-webkit-details-marker {
+      display: none;
     }
 
-    .ff-pc-visual {
-      padding: 28px 24px;
+    .ff-pc-acc--blue.is-open .ff-pc-acc-summary,
+    .ff-pc-acc--blue[open] .ff-pc-acc-summary {
+      background: var(--blue-50);
+    }
+
+    .ff-pc-acc--green.is-open .ff-pc-acc-summary,
+    .ff-pc-acc--green[open] .ff-pc-acc-summary {
+      background: var(--green-50);
+    }
+
+    .ff-pc-acc-title {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--ink);
+      text-align: left;
+      transition: color 0.3s ease;
+    }
+
+    .ff-pc-acc--blue.is-open .ff-pc-acc-title,
+    .ff-pc-acc--blue[open] .ff-pc-acc-title {
+      color: var(--blue-700);
+    }
+
+    .ff-pc-acc--green.is-open .ff-pc-acc-title,
+    .ff-pc-acc--green[open] .ff-pc-acc-title {
+      color: var(--green-700);
+    }
+
+    .ff-pc-acc-toggle {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      position: relative;
+      transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .ff-pc-acc[open] .ff-pc-acc-toggle {
+      transform: rotate(90deg);
+    }
+
+    .ff-pc-acc-toggle::before,
+    .ff-pc-acc-toggle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      background: var(--brand-blue);
+      border-radius: 1px;
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease, opacity 0.2s;
+    }
+
+    .ff-pc-acc-toggle::before {
+      width: 12px;
+      height: 2px;
+    }
+
+    .ff-pc-acc-toggle::after {
+      width: 2px;
+      height: 12px;
+    }
+
+    .ff-pc-acc--green .ff-pc-acc-toggle::before,
+    .ff-pc-acc--green .ff-pc-acc-toggle::after {
+      background: var(--brand-green);
+    }
+
+    .ff-pc-acc[open] .ff-pc-acc-toggle::after {
+      transform: translate(-50%, -50%) scaleY(0);
+      opacity: 0;
+    }
+
+    .ff-pc-acc-collapse {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .ff-pc-acc.is-open .ff-pc-acc-collapse,
+    .ff-pc-acc[open] .ff-pc-acc-collapse {
+      grid-template-rows: 1fr;
+    }
+
+    .ff-pc-acc-body {
+      overflow: hidden;
+      min-height: 0;
+      padding: 0 18px 0;
+      background: var(--bg);
+    }
+
+    .ff-pc-acc.is-open .ff-pc-acc-body,
+    .ff-pc-acc[open] .ff-pc-acc-body {
+      padding-bottom: 20px;
+    }
+
+    .ff-pc-acc-body .ff-pc-panel-inner {
+      padding-top: 4px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition:
+        opacity 0.38s cubic-bezier(0.33, 1, 0.36, 1),
+        transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .ff-pc-acc.is-open .ff-pc-acc-body .ff-pc-panel-inner,
+    .ff-pc-acc[open] .ff-pc-acc-body .ff-pc-panel-inner {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.08s;
+    }
+
+    .ff-pc-acc-body .ff-pc-panel-inner h3 {
+      font-size: 20px;
+      margin-top: 8px;
+    }
+
+    .ff-pc-acc-body .ff-pc-panel-inner p,
+    .ff-pc-acc-body .ff-pc-list li {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .ff-pc-acc-body .ff-pc-list li + li {
+      margin-top: 8px;
     }
   }
 
-  @media (max-width: 560px) {
-    .ff-pc-tab-label {
-      font-size: 11px;
+  @media (prefers-reduced-motion: reduce) {
+    .ff-pc-acc-collapse {
+      transition: none;
     }
 
-    .ff-pc-panel h3 {
-      font-size: 20px;
+    .ff-pc-acc-summary,
+    .ff-pc-acc-title,
+    .ff-pc-acc-toggle,
+    .ff-pc-acc-toggle::before,
+    .ff-pc-acc-toggle::after,
+    .ff-pc-acc-body .ff-pc-panel-inner {
+      transition: none;
+    }
+
+    .ff-pc-acc[open] .ff-pc-acc-toggle {
+      transform: none;
+    }
+
+    .ff-pc-acc-body .ff-pc-panel-inner,
+    .ff-pc-acc.is-open .ff-pc-acc-body .ff-pc-panel-inner,
+    .ff-pc-acc[open] .ff-pc-acc-body .ff-pc-panel-inner {
+      opacity: 1;
+      transform: none;
     }
   }
 </style>

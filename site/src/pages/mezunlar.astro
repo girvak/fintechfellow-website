@@ -229,7 +229,9 @@ const alumniPaths: Array<{
       </div>
 
       <div class="quotes-dots" role="tablist" aria-label="Yorum sırası"></div>
-      <p class="quotes-hint">Kaydırarak veya oklarla diğer yorumları görüntüleyebilirsin.</p>
+      <p class="quotes-hint">
+        Yorumlar otomatik kayar ve ortada görünür; kaydırarak, oklarla veya noktalara tıklayarak gezebilirsin.
+      </p>
       </div>
     </div>
   </section>
@@ -654,7 +656,7 @@ const alumniPaths: Array<{
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: clamp(16px, 4vw, 24px);
+  scroll-padding-inline: var(--quotes-edge-pad, clamp(16px, 4vw, 24px));
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   outline: none;
@@ -693,14 +695,15 @@ const alumniPaths: Array<{
   align-items: stretch;
   gap: clamp(16px, 2.4vw, 22px);
   width: max-content;
-  padding: 8px 2px 20px;
+  padding: 8px var(--quotes-edge-pad, clamp(16px, 4vw, 24px)) 20px;
+  box-sizing: border-box;
 }
 
 .quote-slide {
   --slide-accent: var(--brand-blue);
   flex: 0 0 auto;
   width: clamp(300px, 36vw, 380px);
-  scroll-snap-align: start;
+  scroll-snap-align: center;
   border-radius: 18px;
   overflow: hidden;
   background: #fff;
@@ -972,12 +975,23 @@ const alumniPaths: Array<{
 }
 
 @media (max-width: 640px) {
+  .roster-head {
+    margin-bottom: 28px;
+  }
+
   .cohort-tab {
     flex: 1 1 100%;
+    min-height: 48px;
+    padding: 16px 20px;
   }
 
   .roster-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .cohort-panel {
+    padding: 20px 16px;
   }
 }
 

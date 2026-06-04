@@ -1,0 +1,58 @@
+---
+import type { ProgramContentItem } from '../data/program-content';
+
+interface Props {
+  item: ProgramContentItem;
+}
+
+const { item } = Astro.props;
+---
+
+<h3>{item.heading}</h3>
+{item.body && <p>{item.body}</p>}
+{item.bodySecondary && <p>{item.bodySecondary}</p>}
+{item.bulletsLabel && <p class="ff-pc-lead">{item.bulletsLabel}</p>}
+{
+  item.bullets && item.bullets.length > 0 && (
+    <ul class="ff-pc-list">
+      {item.bullets.map((bullet) => (
+        <li>
+          {typeof bullet === 'string' ? (
+            bullet
+          ) : (
+            <>
+              {bullet.text}
+              {bullet.link && (
+                <>
+                  {' — '}
+                  <a
+                    href={bullet.link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-link"
+                  >
+                    {bullet.link.label} <span aria-hidden="true">↗</span>
+                  </a>
+                </>
+              )}
+            </>
+          )}
+        </li>
+      ))}
+    </ul>
+  )
+}
+{item.workshops?.map((workshop) => (
+  <div class="ff-pc-block">
+    <h4 class="ff-pc-lead">{workshop.title}</h4>
+    <p>{workshop.body}</p>
+  </div>
+))}
+{
+  item.callout && (
+    <div class="ff-pc-block">
+      <h4 class="ff-pc-lead">{item.callout.title}</h4>
+      <p>{item.callout.body}</p>
+    </div>
+  )
+}

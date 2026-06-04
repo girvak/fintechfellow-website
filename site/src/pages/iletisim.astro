@@ -174,4 +174,22 @@ import Reveal from '../components/Reveal.astro';
 @media (max-width: 860px) {
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
 }
+
+@media (max-width: 640px) {
+  .contact-grid { gap: 36px; }
+  .channels-title,
+  .faq-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .faq-item summary {
+    min-height: 44px;
+    padding: 14px 0;
+    font-size: 15px;
+  }
+  .channel-value {
+    font-size: 14px;
+    word-break: break-word;
+  }
+}
 </style>

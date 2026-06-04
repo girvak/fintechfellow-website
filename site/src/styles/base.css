@@ -13,6 +13,14 @@ html, body {
 }
 
 body { overflow-x: hidden; }
+
+/* Ana sayfa hero: mobil/tablet'te scroll + intro tekrar gizli */
+@media (max-width: 860px) {
+  .hero-scroll,
+  .hero-replay-intro {
+    display: none !important;
+  }
+}
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 img, svg { display: block; }
@@ -32,7 +40,21 @@ img, svg { display: block; }
   padding: 0 32px;
 }
 
-@media (max-width: 640px) { .container { padding: 0 20px; } }
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .sec-title {
+    font-size: clamp(28px, 7.5vw, 40px);
+    margin-bottom: 18px;
+  }
+  .sec-sub {
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+  .btn-primary,
+  .btn-outline {
+    min-height: 48px;
+  }
+}
 
 /* ─── Section typography ─── */
 .sec-eyebrow {

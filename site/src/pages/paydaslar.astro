@@ -345,7 +345,7 @@ const partners = [
 /* Birlikte — hero sonrası, beyaz-gri alternasyonun ilk bandı (beyaz) */
 .together--alt {
   background: var(--bg);
-  padding: var(--space-2xl) 0;
+  padding: var(--space-section-y) 0;
 }
 
 .together-head {
@@ -466,6 +466,17 @@ const partners = [
 
   .together-step-desc {
     max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .together-head {
+    margin-bottom: 28px;
+  }
+
+  .together-step {
+    min-height: 0;
+    padding: 24px 20px;
   }
 }
 </style>

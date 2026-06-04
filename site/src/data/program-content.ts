@@ -17,6 +17,8 @@ export type ProgramContentCallout = {
 export type ProgramContentItem = {
   id: string;
   tabLabel: string;
+  /** Mobil sekme listesi — kısa etiket */
+  tabLabelShort: string;
   tone: ProgramContentTone;
   heading: string;
   body?: string;
@@ -37,6 +39,7 @@ export const programContentItems: ProgramContentItem[] = [
   {
     id: 'code',
     tabLabel: "42 Türkiye'da Yazılım Eğitimi",
+    tabLabelShort: '42 Yazılım Eğitimi',
     tone: 'blue',
     heading: 'Yazılımı Üreterek Öğren',
     body: "42 Türkiye'da öğrenme, gerçek projeler ve akran öğrenimi modeliyle ilerler. Algoritmalar, veri yapıları ve sistem programlama gibi alanlarda çalışırken teknik yetkinliklerini geliştirir, problem çözmeyi deneyimleyerek öğrenirsin. Eğitmen odaklı dersler yerine üreterek ilerler, akranlarından öğrenir ve kendi öğrenme yöntemini keşfedersin.",
@@ -51,6 +54,7 @@ export const programContentItems: ProgramContentItem[] = [
   {
     id: 'fintech',
     tabLabel: 'Fintech Alanında Kariyer',
+    tabLabelShort: 'Fintech Kariyer',
     tone: 'green',
     heading: "Fintech'i sektörün içinde keşfetmeye ne dersin?",
     body: "Fintech Fellow Programı'nda amacımız fintech'i sınıfta anlatmak değil; sektörün içindeki profesyonellerle bir araya getirerek gerçek iş dünyasını deneyimlemeni sağlamak.",
@@ -70,6 +74,7 @@ export const programContentItems: ProgramContentItem[] = [
   {
     id: 'founders',
     tabLabel: "Founder's Table",
+    tabLabelShort: "Founder's Table",
     tone: 'blue',
     heading: "Founder's Table",
     body: "Fintech ekosisteminin önde gelen kurucuları ve üst düzey yöneticileriyle gerçekleştirilen Founder's Table buluşmalarında sektörün karar vericileriyle doğrudan etkileşime geçebilirsin. Şirketlerin büyüme yolculuklarını, teknoloji vizyonlarını ve sektördeki güncel dönüşümleri liderlerin kendi deneyimlerinden dinleyerek güçlü bir profesyonel ağ kurma fırsatı yakalayabilirsin.",
@@ -78,6 +83,7 @@ export const programContentItems: ProgramContentItem[] = [
   {
     id: 'mentorship',
     tabLabel: 'Birebir Mentörlük',
+    tabLabelShort: 'Birebir Mentörlük',
     tone: 'green',
     heading: 'Birebir Mentörlük + Job Shadowing',
     body: "Eğitim sürecinde Ödeal ekibinden mentorlar ve sektör profesyonelleriyle birebir mentörlük görüşmelerine ve grup buluşmalarına katılarak hem Ödeal kültürünü yakından tanıyabilir hem de 42 Türkiye süreçlerine dair profesyonel rehberlik alabilirsin.",
@@ -94,6 +100,7 @@ export const programContentItems: ProgramContentItem[] = [
   {
     id: 'growth',
     tabLabel: 'Kişisel ve Sosyal Gelişim',
+    tabLabelShort: 'Kişisel Gelişim',
     tone: 'blue',
     heading: 'Kişisel ve Sosyal Gelişim',
     workshops: [
