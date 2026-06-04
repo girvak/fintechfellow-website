@@ -1,0 +1,16 @@
+# Tutarlı satır sonları (macOS / Windows / Linux)
+* text=auto eol=lf
+
+# İkili dosyalar
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
+
+# SVG metin olarak kalabilir (diff için)
+*.svg text

@@ -1,0 +1,44 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g1" cx="85%" cy="12%" r="55%">
+      <stop offset="0%" stop-color="#42BA6D" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#42BA6D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="5%" cy="88%" r="55%">
+      <stop offset="0%" stop-color="#1C71B7" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1C71B7" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.4" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0B2647"/>
+  <rect width="1200" height="630" fill="url(#g1)"/>
+  <rect width="1200" height="630" fill="url(#g2)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Logo mark -->
+  <text x="72" y="112" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="56" font-weight="900" letter-spacing="-2" fill="white">öd<tspan fill="#42BA6D">eal</tspan> × 42 <tspan fill="#42BA6D">Türkiye</tspan> × GİRVAK</text>
+
+  <!-- Main headline -->
+  <text x="72" y="300" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="white">Yazılım.</text>
+  <text x="72" y="406" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="white">Fintech.</text>
+  <text x="72" y="512" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="#42BA6D">İş Garantisi.</text>
+
+  <!-- Right side badges -->
+  <rect x="820" y="240" width="300" height="72" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+  <text x="970" y="282" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="white" text-anchor="middle">15 Fellow / yıl</text>
+
+  <rect x="820" y="328" width="300" height="72" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+  <text x="970" y="370" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#F4A83A" text-anchor="middle">20.000 TL / ay burs</text>
+
+  <rect x="820" y="416" width="300" height="72" rx="16" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+  <text x="970" y="458" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#42BA6D" text-anchor="middle">%100 istihdam garantisi</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="580" width="1200" height="50" fill="rgba(0,0,0,0.2)"/>
+  <text x="72" y="612" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.55)">fintechfellow.com · Başvurular açık · 11 Haziran 2026</text>
+</svg>

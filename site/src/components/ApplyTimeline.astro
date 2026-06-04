@@ -1,0 +1,745 @@
+---
+import { timelineSteps, timelineTotal } from '../data/basvur-timeline.ts';
+---
+
+<section class="apply-timeline-section sp-section" aria-label="Başvuru süreci takvimi">
+  <div class="container">
+    <div class="apply-timeline-head reveal">
+      <div class="sec-eyebrow">Program ve Başvuru Takvimi</div>
+      <h2 class="sec-title">{timelineTotal} Adımda<br /><span class="g">Başvurudan Kariyere</span></h2>
+    </div>
+
+    <div class="apply-timeline-wrap">
+      <div class="apply-timeline" id="applyTimeline">
+        <div class="apply-timeline-rail" aria-hidden="true">
+          <div class="apply-timeline-line"></div>
+          <div class="apply-timeline-progress"></div>
+        </div>
+
+        {
+          timelineSteps.map((step, i) => (
+            <div class="tl-step-wrap">
+              <article
+                id={step.id}
+                class:list={[
+                  'tl-step reveal',
+                  step.variant && `tl-step--${step.variant}`,
+                ]}
+                data-step={String(i + 1)}
+              >
+                <div class="tl-step-aside">
+                  <div class="tl-marker" aria-hidden="true">
+                    <span class="tl-marker-num">{i + 1}</span>
+                  </div>
+                </div>
+
+                <div class="tl-step-content">
+                  <div class="tl-card">
+                  {step.variant === 'celebrate' && (
+                    <div class="tl-celebrate-fx" aria-hidden="true">
+                      <span class="tl-spark tl-spark--1"></span>
+                      <span class="tl-spark tl-spark--2"></span>
+                      <span class="tl-spark tl-spark--3"></span>
+                    </div>
+                  )}
+
+                  <div class="tl-card-inner">
+                    <div class="tl-card-head">
+                      <span class="tl-step-label">{step.stepLabel}</span>
+                      <h3 class="tl-title">{step.title}</h3>
+                    </div>
+
+                    <div class="tl-card-content">
+                      {step.date && step.dateLabel && (
+                        <div class="tl-block tl-block--date">
+                          <span class="tl-block-label">{step.dateLabel}</span>
+                          <p class="tl-block-value">{step.date}</p>
+                        </div>
+                      )}
+
+                      {step.description && (
+                        <div class="tl-block tl-block--desc">
+                          <span class="tl-block-label">Açıklama</span>
+                          <p class="tl-block-text">{step.description}</p>
+                          {step.callout && (
+                            <p class="tl-callout" role="note">
+                              {step.callout}
+                            </p>
+                          )}
+                          {step.portal && (
+                            <p class="tl-portal">
+                              <a href={step.portal.href} target="_blank" rel="noopener noreferrer">
+                                {step.portal.label} <span aria-hidden="true">↗</span>
+                              </a>
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {step.details && step.details.length > 0 && (
+                        <div class="tl-block tl-block--details">
+                          <span class="tl-block-label">{step.detailsLabel ?? 'Detay'}</span>
+                          <ul class="tl-detail-list">
+                            {step.details.map((item) => (
+                              <li>{item.text}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </article>
+
+              {step.notice && (
+                <div class="tl-notice-step reveal" role="note" aria-label="Önemli bilgilendirme">
+                  <div class="tl-step-aside">
+                    <div class="tl-marker" aria-hidden="true">
+                      <span class="tl-marker-num tl-marker-num--alert">!</span>
+                    </div>
+                  </div>
+                  <div class="tl-notice-body">
+                    {typeof step.notice === 'string' ? (
+                      <p class="tl-notice-text">{step.notice}</p>
+                    ) : (
+                      <div class="tl-notice-rich">
+                        {step.notice.registration && (
+                          <p class="tl-notice-p tl-notice-p--top">{step.notice.registration}</p>
+                        )}
+                        {step.notice.processNote && (
+                          <p class="tl-notice-p">{step.notice.processNote}</p>
+                        )}
+                        {step.notice.sessionsBlock && (
+                          <div class="tl-notice-sessions-panel">
+                            <p class="tl-notice-p">{step.notice.sessionsBlock.intro}</p>
+                            <ul class="tl-notice-session-list">
+                              {step.notice.sessionsBlock.sessions.map((session) => (
+                                <li class="tl-notice-session-item">
+                                  <span class="tl-notice-session-name">{session.title}</span>
+                                  <span class="tl-notice-session-when">
+                                    {session.date} · {session.time}
+                                  </span>
+                                  <a
+                                    class="tl-notice-session-link"
+                                    href={session.youtube.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {session.youtube.label} <span aria-hidden="true">↗</span>
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .apply-timeline-section {
+    background: var(--bg-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .apply-timeline-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(560px 380px at 100% 0%, color-mix(in srgb, var(--brand-blue) 5%, transparent), transparent 55%),
+      radial-gradient(480px 320px at 0% 100%, color-mix(in srgb, var(--brand-green) 4%, transparent), transparent 55%);
+    pointer-events: none;
+  }
+
+  .apply-timeline-head {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin-bottom: clamp(44px, 5vw, 60px);
+  }
+
+  .apply-timeline-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .apply-timeline {
+    --tl-pad-y: 20px;
+    --tl-pad-x: 24px;
+    --tl-space: 12px;
+    --tl-gap-between: 36px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--tl-gap-between);
+  }
+
+  .tl-step-wrap {
+    display: contents;
+  }
+
+  /* Dikey çizgi — numaraların ortasından, son düğümde biter */
+  .apply-timeline-rail {
+    position: absolute;
+    left: 26px;
+    top: 0;
+    width: 2px;
+    height: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .apply-timeline-line {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--r-pill);
+    background: var(--line);
+  }
+
+  .apply-timeline-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    border-radius: var(--r-pill);
+    background: linear-gradient(180deg, var(--brand-blue), var(--brand-green));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--brand-green) 30%, transparent);
+    transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tl-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 24px;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    scroll-margin-top: 120px;
+  }
+
+  .tl-step-aside {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding-top: 22px;
+  }
+
+  .tl-step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .tl-notice-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0 24px;
+    align-items: start;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tl-notice-step.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tl-notice-step .tl-step-aside {
+    padding-top: 22px;
+  }
+
+  .tl-marker-num--alert {
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .tl-notice-body {
+    border-radius: var(--r-lg);
+    border: 1px solid var(--blue-200);
+    background: var(--blue-50);
+    padding: var(--tl-pad-y) var(--tl-pad-x);
+    box-shadow: 0 12px 32px -28px color-mix(in srgb, var(--brand-blue) 16%, transparent);
+  }
+
+  .tl-notice-text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .tl-notice-rich {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tl-notice-p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .tl-notice-p--top {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .tl-notice-sessions-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid color-mix(in srgb, var(--brand-blue) 14%, var(--blue-200));
+  }
+
+  .tl-notice-session-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tl-notice-session-item {
+    display: grid;
+    grid-template-columns: minmax(72px, auto) 1fr auto;
+    align-items: center;
+    gap: 8px 14px;
+    padding: 10px 12px;
+    border-radius: var(--r-md);
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--brand-blue) 10%, var(--blue-200));
+  }
+
+  .tl-notice-session-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .tl-notice-session-when {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    min-width: 0;
+  }
+
+  .tl-notice-session-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-500);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tl-notice-session-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 520px) {
+    .tl-notice-session-item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .tl-notice-session-link {
+      justify-self: start;
+    }
+  }
+
+  .tl-step.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tl-marker {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tl-marker-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--brand-blue);
+    box-shadow: 0 0 0 4px var(--bg-soft), 0 0 0 5px var(--brand-blue);
+    transition: background 0.35s, box-shadow 0.35s, transform 0.35s;
+  }
+
+  .tl-step.is-past .tl-marker-num {
+    background: var(--brand-green);
+    box-shadow: 0 0 0 4px var(--bg-soft), 0 0 0 5px var(--brand-green);
+  }
+
+  .tl-step.is-active .tl-marker-num {
+    background: var(--brand-green);
+    box-shadow:
+      0 0 0 4px var(--bg-soft),
+      0 0 0 5px var(--brand-green),
+      0 0 0 10px color-mix(in srgb, var(--brand-green) 16%, transparent);
+    transform: scale(1.08);
+  }
+
+  .tl-card {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--r-xl);
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 10px 32px -20px rgba(28, 113, 183, 0.14);
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.3s,
+                border-color 0.3s;
+  }
+
+  .tl-step:hover .tl-card {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -18px rgba(28, 113, 183, 0.18);
+  }
+
+  .tl-step.is-active .tl-card {
+    border-color: color-mix(in srgb, var(--brand-green) 32%, var(--line));
+    box-shadow: 0 16px 44px -16px rgba(28, 113, 183, 0.2);
+  }
+
+  .tl-card-inner {
+    padding: var(--tl-pad-y) var(--tl-pad-x);
+  }
+
+  .tl-card-head {
+    padding-bottom: var(--tl-space);
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .tl-step-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tl-space);
+    margin: 0 0 var(--tl-space);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+  }
+
+  .tl-step-label::before {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  .tl-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(19px, 2.2vw, 22px);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+
+  .tl-card-content {
+    margin-top: 0;
+    padding-top: var(--tl-space);
+    display: flex;
+    flex-direction: column;
+    gap: var(--tl-space);
+  }
+
+  .tl-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tl-space);
+  }
+
+  .tl-block-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .tl-block--date .tl-block-label {
+    color: var(--brand-blue);
+  }
+
+  .tl-block--desc .tl-block-label {
+    color: var(--gray-600);
+  }
+
+  .tl-block--details {
+    gap: 8px;
+  }
+
+  .tl-block--details .tl-block-label {
+    color: var(--brand-green);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .tl-block-value {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+
+  .tl-block-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .tl-callout {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+    border-radius: var(--r-md);
+    border: 1px solid color-mix(in srgb, var(--brand-blue) 22%, var(--line));
+    background: color-mix(in srgb, var(--blue-light-50) 65%, var(--surface));
+  }
+
+  .tl-portal {
+    margin: 0;
+  }
+  .tl-portal a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blue-500);
+    text-decoration: none;
+  }
+  .tl-portal a:hover {
+    text-decoration: underline;
+  }
+
+  .tl-detail-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--tl-space);
+  }
+
+  .tl-block--details .tl-detail-list {
+    gap: 6px;
+  }
+
+  .tl-detail-list li {
+    position: relative;
+    padding-left: 14px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .tl-block--details .tl-detail-list li {
+    padding-left: 12px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .tl-detail-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brand-green);
+  }
+
+  .tl-block--details .tl-detail-list li::before {
+    top: 0.5em;
+    width: 5px;
+    height: 5px;
+  }
+
+  .tl-step--celebrate .tl-block--date .tl-block-label,
+  .tl-step--finale .tl-block--desc .tl-block-label {
+    color: var(--green-700);
+  }
+
+  .tl-step--celebrate .tl-block-value,
+  .tl-step--finale .tl-block-text {
+    color: var(--ink);
+  }
+
+  /* Variants */
+  .tl-step--milestone .tl-card {
+    background: linear-gradient(135deg, #fff 72%, var(--blue-50) 100%);
+  }
+
+  .tl-step--celebrate .tl-card {
+    background: linear-gradient(
+      145deg,
+      var(--green-50) 0%,
+      color-mix(in srgb, var(--brand-green) 14%, #fff) 100%
+    );
+    border-color: color-mix(in srgb, var(--brand-green) 32%, var(--line));
+  }
+
+  .tl-step--celebrate .tl-step-label,
+  .tl-step--finale .tl-step-label {
+    color: var(--brand-green);
+  }
+
+  .tl-celebrate-fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .tl-spark {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--brand-green);
+    opacity: 0;
+    animation: tlSpark 3s ease-in-out infinite;
+  }
+
+  .tl-spark--1 { top: 18%; right: 12%; animation-delay: 0s; }
+  .tl-spark--2 { top: 42%; right: 6%; animation-delay: 0.7s; background: var(--brand-blue-light); }
+  .tl-spark--3 { bottom: 22%; right: 16%; animation-delay: 1.4s; background: var(--amber-500); }
+
+  @keyframes tlSpark {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.8; transform: scale(1.15); }
+  }
+
+  .tl-step--celebrate.is-active .tl-card {
+    animation: tlCelebratePulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes tlCelebratePulse {
+    0%, 100% { box-shadow: 0 10px 32px -20px rgba(66, 186, 109, 0.22); }
+    50% { box-shadow: 0 18px 44px -14px rgba(66, 186, 109, 0.32); }
+  }
+
+  .tl-step--finale .tl-card {
+    background: linear-gradient(
+      145deg,
+      var(--green-50) 0%,
+      color-mix(in srgb, var(--brand-green) 14%, #fff) 100%
+    );
+    border-color: color-mix(in srgb, var(--brand-green) 32%, var(--line));
+  }
+
+  @media (max-width: 640px) {
+    .apply-timeline {
+      --tl-pad-y: 18px;
+      --tl-pad-x: 18px;
+      --tl-space: 12px;
+      --tl-gap-between: 28px;
+    }
+
+    .apply-timeline-rail {
+      left: 22px;
+    }
+
+    .tl-step,
+    .tl-notice-step {
+      grid-template-columns: 44px 1fr;
+      gap: 0 18px;
+    }
+
+    .tl-marker-num {
+      width: 32px;
+      height: 32px;
+      font-size: 13px;
+    }
+
+    .tl-step-aside,
+    .tl-notice-step .tl-step-aside {
+      padding-top: 20px;
+    }
+
+    .tl-block-value {
+      font-size: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tl-step {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .tl-step:hover .tl-card {
+      transform: none;
+    }
+
+    .tl-spark,
+    .tl-step--celebrate.is-active .tl-card {
+      animation: none;
+    }
+
+    .apply-timeline-progress {
+      transition: none;
+      height: 100%;
+    }
+  }
+</style>
+
+<script>
+  import { initApplyTimeline } from '../scripts/basvur-timeline.ts';
+  initApplyTimeline();
+</script>

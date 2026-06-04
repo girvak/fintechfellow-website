@@ -1,0 +1,64 @@
+---
+interface Props {
+  eyebrow: string;
+  layout?: 'default' | 'split' | 'compact';
+}
+
+const { eyebrow, layout = 'default' } = Astro.props;
+---
+
+<section
+  class:list={[
+    'sp-hero',
+    { 'sp-hero--split': layout === 'split' },
+    { 'sp-hero--compact': layout === 'compact' },
+  ]}
+>
+  <div class="sp-hero-bg" aria-hidden="true"></div>
+  <div class="sp-hero-grid" aria-hidden="true"></div>
+  <div class="sp-hero-glow sp-hero-glow--green" aria-hidden="true"></div>
+  <div class="sp-hero-glow sp-hero-glow--blue" aria-hidden="true"></div>
+  <div class="container sp-hero-inner">
+    {
+      layout === 'split' ? (
+        <>
+          <div class="sp-hero-main reveal">
+            <div class="sec-eyebrow sp-eyebrow">{eyebrow}</div>
+            <h1 class="sp-hero-title">
+              <slot name="title" />
+            </h1>
+            {Astro.slots.sub && (
+              <p class="sp-hero-sub">
+                <slot name="sub" />
+              </p>
+            )}
+          </div>
+          {Astro.slots.aside && (
+            <div class="sp-hero-aside reveal" data-delay="1">
+              <slot name="aside" />
+            </div>
+          )}
+        </>
+      ) : (
+        <div class="sp-hero-content reveal">
+          <div class="sec-eyebrow sp-eyebrow">{eyebrow}</div>
+          <h1 class="sp-hero-title">
+            <slot name="title" />
+          </h1>
+          {Astro.slots.sub && (
+            <p class="sp-hero-sub">
+              <slot name="sub" />
+            </p>
+          )}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .sp-hero-title :global(.g),
+  .sp-hero-sub :global(.g) {
+    color: var(--brand-green);
+  }
+</style>

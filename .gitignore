@@ -1,0 +1,46 @@
+# ── OS ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── IDE & editörler ─────────────────────────────────
+.idea/
+*.swp
+*.swo
+*~
+
+# VS Code — paylaşılacak ayarlar hariç
+.vscode/*
+!.vscode/extensions.json
+
+# Cursor / Claude (yerel oturumlar)
+.cursor/
+.claude/
+
+# ── Ortam & gizliler ────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Loglar ──────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── Astro site (site/) ──────────────────────────────
+site/node_modules/
+site/dist/
+site/.astro/
+site/.vite/
+
+# Test / coverage
+site/coverage/
+
+# Deploy önbellekleri
+site/.vercel/
+site/.netlify/
+
+# TypeScript build info
+*.tsbuildinfo

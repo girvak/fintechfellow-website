@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Sayfa Bulunamadı — FintechFellow"
+  description="Aradığın sayfa bulunamadı."
+>
+  <Nav darkHero />
+
+  <section class="sp-not-found">
+    <div class="sp-hero-bg" aria-hidden="true"></div>
+    <div class="sp-hero-grid" aria-hidden="true"></div>
+    <div class="sp-hero-glow sp-hero-glow--green" aria-hidden="true"></div>
+    <div class="sp-hero-glow sp-hero-glow--blue" aria-hidden="true"></div>
+    <div class="container sp-not-found-inner">
+      <div class="sp-nf-code" aria-hidden="true">404</div>
+      <h1 class="sp-hero-title">Bu sayfa bulunamadı.</h1>
+      <p class="sp-hero-sub">
+        Aradığın sayfa taşınmış, silinmiş ya da hiç var olmamış olabilir.
+      </p>
+      <div class="nf-actions">
+        <a href="/" class="btn-primary">Ana sayfaya dön <span class="arrow">→</span></a>
+        <a href="/basvur" class="btn-ghost">Başvur</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+.nf-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 8px;
+}
+</style>

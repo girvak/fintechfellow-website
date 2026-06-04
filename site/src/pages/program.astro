@@ -1,0 +1,753 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import SubpageCTA from '../components/SubpageCTA.astro';
+import ProgramContent from '../components/ProgramContent.astro';
+import Reveal from '../components/Reveal.astro';
+import { partnerLogos } from '../data/partners';
+
+const partners = [
+  {
+    id: 'odeal',
+    name: 'Ödeal',
+    logo: partnerLogos.odeal,
+    logoClass: 'partner-logo--odeal',
+    description:
+      "Türkiye'nin önemli fintech şirketlerinden biri. Program mezunlarının işvereni ve programın ana sponsoru.",
+  },
+  {
+    id: '42',
+    name: '42 İstanbul',
+    logo: partnerLogos.fortyTwoTurkiye,
+    logoClass: 'partner-logo--42',
+    description:
+      'Sınıfsız, eğitmensiz peer-to-peer öğrenme modeliyle yazılım eğitimi veren dünya çapında ağ.',
+  },
+  {
+    id: 'girvak',
+    name: 'GİRVAK',
+    logo: partnerLogos.girvak,
+    logoClass: 'partner-logo--girvak',
+    description: 'Girişimciliği destekleyen vakıf. Burs yönetimi ve kariyer gelişiminde program ortağı.',
+  },
+] as const;
+
+/** Geçici: «Her Ayın Haritası» bölümü */
+const SHOW_MONTHLY_MAP = false;
+---
+
+<Base
+  title="Program — FintechFellow"
+  description="9 ayda yazılım, fintech ve kariyer. 42 İstanbul eğitimi, aylık 20.000 TL burs ve Ödeal'da iş garantisi."
+>
+  <Nav darkHero />
+
+  <div class="program-hero">
+    <PageHero eyebrow="Program">
+      <Fragment slot="title">9 Ay Sıfırdan<br /><span class="g">Tam Kariyer</span></Fragment>
+      <Fragment slot="sub">
+        FintechFellow; yazılım eğitimi, fintech bilgisi, sektör ağı<br />
+        ve iş garantisini tek programda bir araya getiriyor.
+      </Fragment>
+    </PageHero>
+  </div>
+
+  <!-- ══ ORTAKLAR ══ -->
+  <section class="sp-section program-overview" id="ortaklar">
+    <div class="container">
+      <div class="overview-block reveal-group">
+        <div class="overview-copy reveal-child">
+          <div class="sec-eyebrow">Programın özü</div>
+          <h2 class="sec-title">Üç Güçlü Ortağın<br /><span class="g">Bir Araya Geldiği Program</span></h2>
+          <p class="sec-sub overview-intro">
+            <strong>Ödeal</strong>, <strong>42 İstanbul</strong> ve <strong>GİRVAK</strong> iş birliğiyle
+            hayata geçirilen bu program; dünya standartlarında yazılım eğitimini, fintech sektörüne
+            derinlemesine erişimi ve istihdam garantisini tek çatı altında sunuyor.
+          </p>
+          <div class="copy-actions">
+            <a href="/basvur" class="btn-primary program-cta">Başvur <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="partner-triangle reveal-child" aria-label="Program ortakları: Ödeal, 42 İstanbul, GİRVAK">
+          <div class="partner-triangle-ring">
+            {partners.map((p, i) => (
+              <div class="partner-triangle-node" style={`--i: ${i}`}>
+                <div class="partner-triangle-tilt">
+                  <div class="partner-triangle-spin">
+                    <div class="partner-triangle-logo">
+                      <img
+                        class:list={['partner-triangle-img', p.logoClass]}
+                        src={p.logo}
+                        alt={p.name}
+                        width="120"
+                        height="40"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ══ ZAMAN ÇİZELGESİ — şimdilik gizli ══ */}
+  {SHOW_MONTHLY_MAP && (
+  <section class="sp-section sp-section--soft program-timeline" id="takvim">
+    <div class="container">
+      <div class="tl-block reveal-group">
+        <div class="tl-head reveal-child">
+          <div class="sec-eyebrow">9 ayın detayı</div>
+          <h2 class="sec-title">Her Ayın <span class="g">Haritası</span></h2>
+          <p class="sec-sub tl-intro">Programın her fazı birbirini besler — temel, uzmanlık ve kariyer.</p>
+        </div>
+
+        <div class="tl-track">
+          <article class="tl-phase reveal-child">
+            <div class="tl-phase-top">
+              <div class="tl-phase-icon tl-phase-icon--blue" aria-hidden="true">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+              </div>
+              <div>
+                <div class="tl-phase-label blue">Faz 1 · Ay 1–4</div>
+                <h3 class="tl-phase-title">42 İstanbul Yazılım Eğitimi</h3>
+              </div>
+            </div>
+            <div class="tl-items">
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>Piscine (Seçim Süreci)</strong>
+                  <p>4 haftalık yoğun seçim döngüsü. C programlama, algoritmalar ve 42 İstanbul metodolojisine giriş.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>Temel Müfredat</strong>
+                  <p>Unix sistemi, ağ programlama, veri yapıları ve nesne yönelimli programlama projeleri.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>Akran Değerlendirmesi</strong>
+                  <p>Her proje akranlar tarafından değerlendirilir. Öğretmek de öğrenmenin bir parçası.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-phase reveal-child">
+            <div class="tl-phase-top">
+              <div class="tl-phase-icon tl-phase-icon--green" aria-hidden="true">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1" />
+                </svg>
+              </div>
+              <div>
+                <div class="tl-phase-label green">Faz 2 · Ay 4–7</div>
+                <h3 class="tl-phase-title">Fintech bootcamp'leri</h3>
+              </div>
+            </div>
+            <div class="tl-items">
+              <div class="tl-item">
+                <div class="tl-item-marker green" />
+                <div class="tl-item-body">
+                  <strong>Ödeme Sistemleri</strong>
+                  <p>Kart ağları, ödeme altyapısı, POS sistemleri ve dijital cüzdanlar.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker green" />
+                <div class="tl-item-body">
+                  <strong>Açık Bankacılık &amp; API'ler</strong>
+                  <p>Open Banking standartları, PSD2, finansal API mimarileri ve entegrasyon projeleri.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker green" />
+                <div class="tl-item-body">
+                  <strong>Risk &amp; Uyum</strong>
+                  <p>Dolandırıcılık tespiti, KYC/AML süreçleri ve regülasyon ortamı.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="tl-phase reveal-child">
+            <div class="tl-phase-top">
+              <div class="tl-phase-icon tl-phase-icon--blue" aria-hidden="true">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div>
+                <div class="tl-phase-label blue">Faz 3 · Ay 7–9</div>
+                <h3 class="tl-phase-title">Mentörlük &amp; Kariyer</h3>
+              </div>
+            </div>
+            <div class="tl-items">
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>CEO &amp; Lider Buluşmaları</strong>
+                  <p>Fintech sektörünün üst düzey isimleriyle birebir buluşmalar ve panel oturumları.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>Birebir Mentörlük + Job Shadowing</strong>
+                  <p>Ödeal mentorları, GİRVAK network, düzenli check-in'ler ve program sonunda ofiste job shadowing.</p>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-item-marker" />
+                <div class="tl-item-body">
+                  <strong>Ödeal'da İşe Başlangıç</strong>
+                  <p>Programı tamamlayan tüm Fellows Ödeal'da tam zamanlı pozisyona başlıyor.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  )}
+
+  <!-- ══ PROGRAM İÇERİĞİ ══ -->
+  <section class="sp-section program-activities" id="icerik">
+    <div class="container">
+      <ProgramContent
+        rootId="program-page-content"
+        title='9 Ay Boyunca<br /><span class="g">Tam Bir Profesyonel</span>'
+        intro="Yazılım, fintech, liderlik ve kariyer — hepsi tek programda."
+      />
+    </div>
+  </section>
+
+  <!-- ══ UYGUNLUK ══ -->
+  <section class="sp-section sp-section--soft program-eligibility" id="basvuru">
+    <div class="container">
+      <div class="elig-block reveal-group">
+        <div class="elig-copy reveal-child">
+          <div class="sec-eyebrow">Kim başvurabilir?</div>
+          <h2 class="sec-title">Diploma Değil<br /><span class="g">Merak Aranıyor</span></h2>
+          <p class="sec-sub elig-intro">
+            Nerede olduğunu ya da ne okuduğunu değil, nereye gitmek istediğini önemsiyoruz.
+            Tek kriter 18–27 yaş aralığında olman ve yazılıma duyulan gerçek merak.
+          </p>
+          <div class="copy-actions">
+            <a href="/basvur" class="btn-primary program-cta">Başvur <span class="arrow">→</span></a>
+          </div>
+        </div>
+
+        <div class="elig-cards">
+          <div class="elig-card yes reveal-child">
+            <div class="elig-card-head">
+              <span class="elig-badge yes">Uygun</span>
+            </div>
+            <ul>
+              <li>
+                <span class="elig-list-icon elig-list-icon--yes" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                18–27 yaş aralığında olmak
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--yes" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                Yazılıma gerçek merak duymak
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--yes" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                İstanbul'da ikamet etmek
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--yes" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                Tam zamanlı katılım taahhüdü
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--yes" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                Üniversite öğrencisi, mezun veya bırakmış
+              </li>
+            </ul>
+          </div>
+          <div class="elig-card no reveal-child">
+            <div class="elig-card-head">
+              <span class="elig-badge no">Şart değil</span>
+            </div>
+            <ul>
+              <li>
+                <span class="elig-list-icon elig-list-icon--no" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 12h12" stroke-linecap="round" /></svg>
+                </span>
+                Üniversite diploması
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--no" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 12h12" stroke-linecap="round" /></svg>
+                </span>
+                Bilgisayar bölümü mezuniyeti
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--no" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 12h12" stroke-linecap="round" /></svg>
+                </span>
+                Önceki yazılım deneyimi
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--no" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 12h12" stroke-linecap="round" /></svg>
+                </span>
+                Belirli bir not ortalaması
+              </li>
+              <li>
+                <span class="elig-list-icon elig-list-icon--no" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 12h12" stroke-linecap="round" /></svg>
+                </span>
+                Yabancı dil sertifikası
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SubpageCTA
+    title='Diploma Değil<br><span class="g">Merak Aranıyor</span>'
+    sub='9 ay · 15 kişiye kadar alınacaktır · <span class="g">Burs ve iş garantisi</span>'
+  />
+
+  <Reveal />
+  <Footer />
+</Base>
+
+<style>
+/* Hero */
+.program-hero :global(.sp-hero-sub) {
+  max-width: none;
+}
+
+/* Ortaklar */
+.overview-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 80px);
+  align-items: center;
+  min-width: 0;
+}
+
+.overview-copy,
+.elig-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 520px;
+}
+
+.overview-copy .sec-title,
+.elig-copy .sec-title {
+  margin-bottom: 16px;
+}
+
+.overview-intro,
+.tl-intro,
+.elig-intro {
+  margin-bottom: 0;
+  max-width: 100%;
+}
+
+.copy-actions {
+  margin-top: clamp(24px, 3vw, 32px);
+  padding-top: 4px;
+}
+
+.overview-copy .copy-actions {
+  margin-top: auto;
+  padding-top: clamp(28px, 4vw, 36px);
+}
+
+.program-cta {
+  flex-shrink: 0;
+}
+
+.tl-intro {
+  margin-bottom: 0;
+}
+
+/* Üçgen dönen logolar */
+.partner-triangle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 12px 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.partner-triangle-ring {
+  --tri-size: 360px;
+  --tri-radius: 142px;
+  --node-size: 112px;
+  position: relative;
+  width: var(--tri-size);
+  height: var(--tri-size);
+  animation: partnerTriOrbit 24s linear infinite;
+}
+
+.partner-triangle-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--node-size);
+  height: var(--node-size);
+  margin: calc(var(--node-size) / -2);
+  transform: rotate(calc(var(--i) * 120deg)) translateY(calc(var(--tri-radius) * -1));
+}
+
+.partner-triangle-tilt {
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(var(--i) * -120deg));
+}
+
+.partner-triangle-spin {
+  width: 100%;
+  height: 100%;
+  animation: partnerTriOrbit 24s linear infinite reverse;
+}
+
+.partner-triangle-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 28px -14px rgba(28, 113, 183, 0.2);
+}
+
+.partner-triangle-img {
+  display: block;
+  width: auto;
+}
+
+@keyframes partnerTriOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-triangle-ring {
+    animation: none;
+  }
+
+  .partner-triangle-spin {
+    animation: none;
+  }
+}
+
+/* Zaman çizelgesi */
+.tl-head {
+  margin-bottom: clamp(36px, 4vw, 48px);
+  max-width: 720px;
+}
+
+.tl-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.tl-phase {
+  padding: 24px 22px;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line);
+  background: #fff;
+  box-shadow: 0 8px 28px -18px rgba(28, 113, 183, 0.1);
+}
+
+.tl-phase-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.tl-phase-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tl-phase-icon--blue {
+  background: var(--blue-50);
+  color: var(--brand-blue);
+}
+
+.tl-phase-icon--green {
+  background: var(--green-50);
+  color: var(--brand-green);
+}
+
+.tl-phase-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  margin-bottom: 8px;
+}
+
+.tl-phase-label.blue {
+  color: var(--blue-600);
+  background: var(--blue-50);
+}
+
+.tl-phase-label.green {
+  color: var(--green-700);
+  background: var(--green-50);
+}
+
+.tl-phase-title {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.tl-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tl-item {
+  display: flex;
+  gap: 14px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.tl-item:last-child {
+  padding-bottom: 0;
+}
+
+.tl-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+
+.tl-item-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--brand-blue);
+  margin-top: 4px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--brand-blue);
+}
+
+.tl-item-marker.green {
+  background: var(--brand-green);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px var(--brand-green);
+}
+
+.tl-item-body strong {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.tl-item-body p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Uygunluk */
+.elig-block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 80px);
+  align-items: stretch;
+}
+
+.elig-copy .copy-actions {
+  margin-top: auto;
+  padding-top: clamp(28px, 4vw, 36px);
+}
+
+.elig-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.elig-card {
+  padding: 26px 24px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.elig-card.yes {
+  border-color: var(--green-200);
+}
+
+.elig-card-head {
+  margin-bottom: 16px;
+}
+
+.elig-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: var(--r-pill);
+}
+
+.elig-badge.yes {
+  color: var(--green-700);
+  background: var(--green-50);
+}
+
+.elig-badge.no {
+  color: var(--ink-muted);
+  background: var(--line-soft);
+}
+
+.elig-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.elig-card ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.elig-list-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.elig-list-icon--yes {
+  background: var(--green-50);
+  color: var(--brand-green);
+}
+
+.elig-list-icon--no {
+  background: var(--bg-soft);
+  color: var(--ink-muted);
+}
+
+/* Reveal grupları — program */
+.tl-block.in .tl-track .tl-phase.reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.tl-block.in .tl-track .tl-phase.reveal-child:nth-child(2) { transition-delay: 0.16s; }
+.tl-block.in .tl-track .tl-phase.reveal-child:nth-child(3) { transition-delay: 0.22s; }
+
+.tl-block .tl-phase.reveal-child,
+.elig-block .elig-cards .elig-card.reveal-child {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tl-block.in .tl-phase.reveal-child,
+.elig-block.in .elig-cards .elig-card.reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.elig-block.in .elig-cards .elig-card.reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.elig-block.in .elig-cards .elig-card.reveal-child:nth-child(2) { transition-delay: 0.16s; }
+
+@media (max-width: 1100px) {
+  .partner-triangle-ring {
+    --tri-size: 320px;
+    --tri-radius: 126px;
+    --node-size: 100px;
+  }
+}
+
+@media (max-width: 860px) {
+  .overview-block,
+  .elig-block {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .tl-track {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .act-grid,
+  .elig-cards {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

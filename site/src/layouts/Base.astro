@@ -1,0 +1,70 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'FintechFellow — Yazılım + Fintech + Burs + İş Garantisi',
+  description = 'FintechFellow, 18-27 yaş arası gençlere 42 İstanbul eğitimi, aylık 20.000 TL burs ve Ödeal\'da iş garantisi sunan istihdam odaklı bir programdır.',
+  ogImage = '/assets/og-image.svg',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    (function () {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      var root = document.documentElement;
+      root.dataset.viewport = w <= 640 ? 'mobile' : w <= 960 ? 'tablet' : 'desktop';
+      if (h <= 520) root.dataset.viewportCompact = 'true';
+      try {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          root.dataset.motion = 'reduced';
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={new URL(Astro.url.pathname, 'https://fintechfellow.com').href} />
+  <meta property="og:locale" content="tr_TR" />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="theme-color" content="#1C71B7" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="canonical" href={new URL(Astro.url.pathname, 'https://fintechfellow.com').href} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/logos/logo-dark-stacked.svg" />
+</head>
+<body>
+  <script>
+    import '../scripts/viewer-framing.ts';
+  </script>
+  <a href="#main-content" class="skip-link">İçeriğe geç</a>
+  <main id="main-content">
+    <slot />
+  </main>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/base.css';
+  @import '../styles/subpages.css';
+  @import '../styles/partner-logos.css';
+</style>

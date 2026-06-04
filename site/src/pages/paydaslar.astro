@@ -1,0 +1,458 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import SubpageCTA from '../components/SubpageCTA.astro';
+import Reveal from '../components/Reveal.astro';
+import { partnerLogos } from '../data/partners';
+import { poolEducationCopy } from '../data/basvur-timeline';
+
+const partners = [
+  {
+    id: 'odeal',
+    name: 'Ödeal',
+    logo: partnerLogos.odeal,
+    logoClass: 'pv-logo-img--odeal',
+    eyebrow: 'Burs ve İş Garantisi',
+    lead: "Ödeal, Türkiye'nin önde gelen finansal teknoloji şirketlerinden biri. Ödeme sistemleri, kurumsal finans çözümleri ve dijital bankacılık altyapısı alanlarında faaliyet gösteriyor.",
+    body: "Fintech Fellow Programı'nın ana sponsoru ve mezunların işvereni olan Ödeal, aylık 20.000 TL bursu ve iş garantisini sunuyor; İK buluşmaları, workshoplar, birebir mentörlük ve job shadowing ile katılımcıların gerçek üretim ortamını yakından tanımalarını destekliyor.",
+    facts: [
+      { n: '20K', l: 'TL / ay burs — program boyunca' },
+      { n: '%100', l: "İş garantisi — her Fellow Ödeal'da başlıyor" },
+    ],
+    href: 'https://odeal.com',
+    linkLabel: "Ödeal'ı keşfet",
+    reverse: false,
+  },
+  {
+    id: '42',
+    name: '42 Türkiye',
+    logo: partnerLogos.fortyTwoTurkiye,
+    logoClass: 'pv-logo-img--42',
+    eyebrow: 'Yazılım Okulları',
+    lead: poolEducationCopy.title,
+    body: poolEducationCopy.description,
+    facts: [],
+    href: poolEducationCopy.portal.href,
+    linkLabel: poolEducationCopy.portal.label,
+    reverse: true,
+  },
+  {
+    id: 'girvak',
+    name: 'GİRVAK',
+    logo: partnerLogos.girvak,
+    logoClass: 'pv-logo-img--girvak',
+    eyebrow: 'Mentörlük ve Kişisel Gelişim',
+    lead:
+      'Türkiye Girişimcilik Vakfı (GİRVAK), yetenekli gençlerin potansiyellerini gerçeğe dönüştürmelerine destek olmak için Türkiye\'de girişimciliği desteklemek amacıyla kurulmuş bağımsız bir vakıftır.',
+    body:
+      "Fintech Fellow Programı'nda GİRVAK; mentörlük koordinasyonu, kişisel gelişim atölyeleri ve proje yönetimi süreçlerini üstlenerek katılımcıların kodun ötesinde tam bir profesyonel olarak yetişmesini destekler.",
+    facts: [
+      { n: 'Mentörlük', l: 'GİRVAK network ve gelişim takibi' },
+      { n: 'Gelişim', l: 'Kişisel ve sosyal yetkinlik atölyeleri' },
+    ],
+    href: 'https://www.girisimcilikvakfi.org/',
+    linkLabel: "GİRVAK'ı keşfet",
+    reverse: false,
+  },
+] as const;
+---
+
+<Base
+  title="Hakkımızda — FintechFellow"
+  description="FintechFellow'u mümkün kılan üç güç: 42 İstanbul, Ödeal ve GİRVAK."
+>
+  <Nav darkHero />
+
+  <div class="paydaslar-hero">
+    <PageHero eyebrow="Hakkımızda">
+      <Fragment slot="title">Tek Başına Değil<br /><span class="g">Üç Güçle Birlikte</span></Fragment>
+      <Fragment slot="sub">
+        FintechFellow; Ödeal, 42 İstanbul ve GİRVAK iş birliğiyle hayata geçirildi.<br />
+        Her biri farklı bir gücü masaya getiriyor.
+      </Fragment>
+    </PageHero>
+  </div>
+
+  <!-- ══ BİRLİKTE (hero sonrası) ══ -->
+  <section class="together together--alt">
+    <div class="container">
+      <div class="together-head reveal">
+        <div class="sec-eyebrow">Birlikte ne oluyor?</div>
+        <h2 class="sec-title">Üç Ortak <span class="g">Tek Yolculuk</span></h2>
+        <p class="sec-sub together-intro">
+          Her biri programın farklı bir parçasını üstleniyor. Bir araya gelince tam bir kariyer paketi oluşuyor.
+        </p>
+      </div>
+
+      <div class="together-flow reveal" data-delay="1">
+        <article class="together-step">
+          <div class="together-step-logo">
+            <img src={partnerLogos.fortyTwoTurkiye} alt="42 Türkiye" loading="lazy" decoding="async" />
+          </div>
+          <p class="together-step-desc">Yazılım Okulları</p>
+        </article>
+
+        <article class="together-step">
+          <div class="together-step-logo">
+            <img src={partnerLogos.odeal} alt="Ödeal" loading="lazy" decoding="async" />
+          </div>
+          <p class="together-step-desc">Burs ve İş Garantisi</p>
+        </article>
+
+        <article class="together-step">
+          <div class="together-step-logo">
+            <img src={partnerLogos.girvak} alt="GİRVAK" loading="lazy" decoding="async" />
+          </div>
+          <p class="together-step-desc">Mentörlük ve Kişisel Gelişim</p>
+        </article>
+
+        <div class="together-outcome">
+          <p class="together-outcome-label">Program çıktısı</p>
+          <p class="together-outcome-text">
+            9 ay · yazılım · fintech · <span class="g">20K burs</span> · <span class="g">iş garantisi</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    partners.map((p, i) => (
+      <section
+        class:list={[
+          'sp-section partner-section',
+          { 'sp-section--soft': i % 2 === 0 },
+          { 'partner-section--42': p.id === '42' },
+        ]}
+        id={p.id}
+      >
+        <div class:list={['container partner-grid', { reverse: p.reverse }]}>
+          <div class="partner-visual reveal">
+            <img
+              class:list={['pv-logo-img', p.logoClass]}
+              src={p.id === '42' ? partnerLogos.fortyTwoTurkiye : p.logo}
+              alt={p.id === '42' ? '42 Türkiye' : p.name}
+              width="320"
+              height="160"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="partner-content reveal" data-delay="1">
+            <div class="partner-content-main">
+              <div class="sec-eyebrow">{p.eyebrow}</div>
+              <h2 class="sec-title partner-title">{p.name}</h2>
+              <p class="partner-lead">{p.lead}</p>
+              <p class="partner-body">{p.body}</p>
+              {p.facts.length > 0 && (
+                <div class="partner-facts">
+                  {p.facts.map((f) => (
+                    <div class="pfact">
+                      <span class="pfact-n">{f.n}</span>
+                      <span class="pfact-l">{f.l}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class="partner-content-foot">
+              {
+                p.href ? (
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" class="inline-link">
+                    {p.linkLabel} <span>↗</span>
+                  </a>
+                ) : (
+                  <span class="partner-foot-spacer" aria-hidden="true"></span>
+                )
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <SubpageCTA
+    title='Bu Ekosisteme<br><span class="g">Sen De Katıl</span>'
+    sub="15 kişiye kadar alınacaktır · Ücretsiz başvuru"
+  />
+
+  <Reveal />
+  <Footer />
+</Base>
+
+<style>
+/* Paydaşlar hero alt başlık — 2 satır (cümle + cümle) */
+.paydaslar-hero :global(.sp-hero-content) {
+  max-width: 920px;
+}
+
+.paydaslar-hero :global(.sp-hero-sub) {
+  color: rgba(255, 255, 255, 0.52);
+  max-width: none;
+  line-height: 1.65;
+}
+
+/* Partner blokları — sabit kart yüksekliği, hizalı metin kolonu */
+.partner-section {
+  --partner-block-min: 520px;
+  --partner-col-logo: minmax(280px, 1fr);
+  --partner-col-text: minmax(0, 1.05fr);
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: var(--partner-col-logo) var(--partner-col-text);
+  gap: clamp(48px, 6vw, 80px);
+  align-items: stretch;
+  width: 100%;
+}
+
+.partner-grid.reverse {
+  direction: rtl;
+}
+
+.partner-grid.reverse > * {
+  direction: ltr;
+}
+
+.partner-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: var(--partner-block-min);
+  padding: clamp(32px, 4vw, 48px);
+  border-radius: var(--r-xl);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 48px -28px rgba(28, 113, 183, 0.2);
+}
+
+.pv-logo-img {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.partner-content {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--partner-block-min);
+}
+
+.partner-content-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.partner-title {
+  margin-bottom: 20px;
+}
+
+.partner-lead {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+.partner-body {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+
+.partner-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.partner-content-foot {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding-top: 28px;
+  min-height: 28px;
+}
+
+.partner-foot-spacer {
+  display: block;
+  min-height: 1.5em;
+}
+
+.pfact {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+.pfact-n {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--blue-500);
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+/* 42 İstanbul bölümü — mavi aksanlar yeşil */
+.partner-section--42 .sec-eyebrow,
+.partner-section--42 .sec-eyebrow::before {
+  color: var(--brand-green);
+}
+
+.partner-section--42 .pfact-n {
+  color: var(--brand-green);
+}
+
+.partner-section--42 .inline-link {
+  color: var(--brand-green);
+}
+
+.partner-section--42 .inline-link:hover {
+  color: var(--green-700);
+}
+
+.pfact-l {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* Birlikte — hero sonrası, beyaz-gri alternasyonun ilk bandı (beyaz) */
+.together--alt {
+  background: var(--bg);
+  padding: var(--space-2xl) 0;
+}
+
+.together-head {
+  margin-bottom: clamp(40px, 5vw, 56px);
+  max-width: 720px;
+}
+
+.together-intro {
+  margin-bottom: 0;
+}
+
+.together-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+  align-items: stretch;
+}
+
+@media (min-width: 860px) {
+  .together-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+.together-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 220px;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  text-align: center;
+}
+
+.together-step-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 88px;
+  margin-bottom: 12px;
+}
+
+.together-step-logo img {
+  display: block;
+  width: auto;
+}
+
+.together-step-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+  width: 100%;
+  max-width: 22ch;
+  margin-inline: auto;
+}
+
+.together-outcome {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  padding: clamp(26px, 3.5vw, 32px) clamp(28px, 4vw, 48px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  text-align: center;
+  width: 100%;
+}
+
+.together-outcome-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 8px;
+}
+
+.together-outcome-text {
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 auto;
+  line-height: 1.45;
+  max-width: 52ch;
+}
+
+.together-outcome-text .g {
+  color: var(--green-500);
+}
+
+@media (max-width: 860px) {
+  .partner-section {
+    --partner-block-min: clamp(240px, 52vw, 300px);
+  }
+
+  .partner-grid,
+  .partner-grid.reverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 28px;
+  }
+
+  .partner-content {
+    min-height: 0;
+  }
+
+  .together-step {
+    min-height: 200px;
+  }
+
+  .together-step-desc {
+    max-width: none;
+  }
+}
+</style>

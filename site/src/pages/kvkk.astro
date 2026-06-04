@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Base
+  title="KVKK Aydınlatma Metni — FintechFellow"
+  description="FintechFellow kişisel verilerin korunması ve işlenmesine ilişkin aydınlatma metni."
+>
+  <Nav darkHero />
+
+  <PageHero eyebrow="Gizlilik" layout="compact">
+    <Fragment slot="title">KVKK Aydınlatma Metni</Fragment>
+  </PageHero>
+
+  <div class="sp-legal-body">
+    <div class="container sp-legal-inner">
+      <article class="sp-legal-prose">
+
+        <p class="sp-legal-updated">Son güncelleme: Ocak 2026</p>
+
+        <h2>1. Veri Sorumlusu</h2>
+        <p>
+          Bu aydınlatma metni; <strong>Ödeal Ödeme Kuruluşu A.Ş.</strong> ("Ödeal") tarafından,
+          6698 sayılı Kişisel Verilerin Korunması Kanunu'nun ("KVKK") 10. maddesi gereğince
+          hazırlanmıştır. FintechFellow programına başvuru sürecinde toplanan kişisel veriler
+          Ödeal tarafından veri sorumlusu sıfatıyla işlenmektedir.
+        </p>
+
+        <h2>2. İşlenen Kişisel Veriler</h2>
+        <p>Başvuru formu aracılığıyla aşağıdaki kişisel veriler toplanmaktadır:</p>
+        <ul>
+          <li>Ad, soyad</li>
+          <li>E-posta adresi ve telefon numarası</li>
+          <li>Yaş ve eğitim durumu bilgisi</li>
+          <li>Mevcut teknik seviye ve motivasyon beyanı</li>
+        </ul>
+
+        <h2>3. Kişisel Verilerin İşlenme Amaçları</h2>
+        <ul>
+          <li>FintechFellow başvurularını değerlendirmek ve yönetmek</li>
+          <li>Başvuru sürecinde ilgili kişilerle iletişim kurmak</li>
+          <li>Yasal yükümlülükleri yerine getirmek</li>
+          <li>Program kalitesini iyileştirmeye yönelik istatistiksel analizler yapmak</li>
+        </ul>
+
+        <h2>4. Kişisel Verilerin Aktarılması</h2>
+        <p>
+          Toplanan kişisel veriler; program ortaklarımız olan <strong>42 İstanbul</strong> ve
+          <strong>GİRVAK</strong>'a, başvuru değerlendirme süreçleri kapsamında aktarılabilir.
+          Yurt dışına aktarım yapılmamaktadır.
+        </p>
+
+        <h2>5. Kişisel Verilerin Saklanma Süresi</h2>
+        <p>
+          Başvuru verileri, değerlendirme sürecinin tamamlanmasının ardından en fazla 2 yıl
+          süreyle saklanır. Programa kabul edilen kişilerin verileri, iş ilişkisi süresince ve
+          sonrasında yasal süreler boyunca işlenmeye devam eder.
+        </p>
+
+        <h2>6. İlgili Kişinin Hakları</h2>
+        <p>KVKK'nın 11. maddesi kapsamında aşağıdaki haklarınız mevcuttur:</p>
+        <ul>
+          <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme</li>
+          <li>İşlenmişse buna ilişkin bilgi talep etme</li>
+          <li>Verilerin eksik veya yanlış işlendiği hallerde düzeltilmesini isteme</li>
+          <li>Verilerin silinmesini veya yok edilmesini isteme</li>
+          <li>İşlemenin otomatik yöntemlerle gerçekleşmesi halinde ortaya çıkacak sonuca itiraz etme</li>
+          <li>Kanuna aykırı işleme nedeniyle zarara uğramanız halinde tazminat talep etme</li>
+        </ul>
+
+        <h2>7. İletişim</h2>
+        <p>
+          Haklarınıza ilişkin taleplerinizi <a href="mailto:kvkk@odeal.com">kvkk@odeal.com</a>
+          adresine iletebilirsiniz.
+        </p>
+
+      </article>
+    </div>
+  </div>
+
+  <Footer />
+</Base>

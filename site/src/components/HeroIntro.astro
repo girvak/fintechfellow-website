@@ -1,0 +1,471 @@
+---
+/**
+ * Yalnızca ilk anasayfa ziyaretinde tam ekran intro (yeni dönem → terminal mesajları → hero).
+ * Sonraki ziyaretlerde atlanır (localStorage). ?intro=1 zorla, ?intro=0 atla.
+ */
+---
+<script is:inline>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    if (params.get('intro') === '0') {
+      document.documentElement.classList.add('hero-intro-skip');
+      return;
+    }
+    if (params.get('intro') === '1') {
+      document.documentElement.classList.add('hero-intro-pending');
+      return;
+    }
+    try {
+      if (localStorage.getItem('ff_hero_intro_v1') === 'seen') {
+        document.documentElement.classList.add('hero-intro-skip');
+      } else {
+        document.documentElement.classList.add('hero-intro-pending');
+      }
+    } catch (e) {
+      document.documentElement.classList.add('hero-intro-pending');
+    }
+  })();
+</script>
+
+<div
+  id="hero-intro"
+  class="hero-intro"
+  hidden
+  aria-hidden="true"
+  aria-live="polite"
+>
+  <div class="hero-intro-bg" aria-hidden="true"></div>
+  <div class="hero-intro-grid" aria-hidden="true"></div>
+
+  <div class="hero-intro-phase hero-intro-phase--era" data-phase="era">
+    <p class="hero-intro-brand">FintechFellow</p>
+    <p class="hero-intro-era" id="hero-intro-era"></p>
+  </div>
+
+  <div class="hero-intro-phase hero-intro-phase--term" data-phase="term" hidden>
+    <div class="hero-intro-open-flash" aria-hidden="true"></div>
+    <div class="hero-intro-terminal" id="hero-intro-terminal">
+      <div class="hero-intro-terminal-inner">
+        <div class="hero-intro-term-bar" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <code>fellow@fintechfellow — session</code>
+        </div>
+        <pre class="hero-intro-term-out" id="hero-intro-term-out" aria-label="Sistem başlatma çıktısı"></pre>
+        <span class="hero-intro-cursor" id="hero-intro-cursor" aria-hidden="true">▌</span>
+      </div>
+      <div class="hero-intro-scanlines" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <button type="button" class="hero-intro-skip" id="hero-intro-skip" hidden>
+    Intro'yu atla
+  </button>
+</div>
+
+<style>
+  .hero-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 5vw, 48px);
+    background: var(--blue-500);
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
+  }
+
+  html.hero-intro-pending .hero-intro {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  html.hero-intro-pending body {
+    overflow: hidden;
+  }
+
+  .hero-intro.is-exiting,
+  .hero-intro.is-handoff {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero-intro.is-handoff {
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.65s ease;
+    filter: brightness(1.15);
+  }
+
+  .hero-intro-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(800px 600px at 88% 18%, color-mix(in srgb, var(--brand-green) 22%, transparent), transparent 60%),
+      radial-gradient(700px 500px at 8% 90%, color-mix(in srgb, var(--brand-blue-light) 50%, transparent), transparent 60%),
+      var(--blue-500);
+    pointer-events: none;
+  }
+
+  .hero-intro-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.14;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 70% at center, black 40%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .hero-intro-phase {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 720px);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .hero-intro-phase.is-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-intro-phase.is-leaving {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .hero-intro-brand {
+    margin: 0;
+    font-weight: 900;
+    font-size: clamp(40px, 7.5vw, 84px);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: #fff;
+    text-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  }
+
+  .hero-intro-era {
+    margin: 6px 0 0;
+    font-weight: 400;
+    font-size: clamp(15px, 2.2vw, 22px);
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.65);
+    min-height: 1.3em;
+    line-height: 1.2;
+  }
+
+  .hero-intro-era .g {
+    color: var(--brand-green);
+    font-weight: 600;
+  }
+
+  .hero-intro-phase--term {
+    text-align: left;
+    width: min(100%, 620px);
+  }
+
+  .hero-intro-open-flash {
+    position: absolute;
+    inset: -30% -10%;
+    background: radial-gradient(
+      ellipse 60% 40% at 50% 50%,
+      color-mix(in srgb, var(--brand-green) 55%, transparent),
+      transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-intro-phase--term.is-booting .hero-intro-open-flash {
+    animation: introOpenFlash 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes introOpenFlash {
+    0% {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    35% {
+      opacity: 0.55;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+  }
+
+  html.hero-intro-pending .hero-intro-grid.is-pulse {
+    animation: introGridPulse 0.5s ease-in-out 2;
+  }
+
+  @keyframes introGridPulse {
+    0%,
+    100% {
+      opacity: 0.14;
+    }
+    50% {
+      opacity: 0.24;
+    }
+  }
+
+  .hero-intro-terminal {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    border: 1px solid rgba(66, 186, 109, 0.35);
+    border-radius: var(--r-md);
+    background: rgba(4, 10, 18, 0.82);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 24px 56px rgba(0, 0, 0, 0.45),
+      0 0 40px color-mix(in srgb, var(--brand-green) 12%, transparent);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    --term-clip-x: 14%;
+    --term-clip-r: 14px;
+    will-change: clip-path, opacity;
+    clip-path: inset(50% var(--term-clip-x) 50% var(--term-clip-x) round var(--term-clip-r));
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(6px) brightness(1.35);
+  }
+
+  .hero-intro-terminal-inner {
+    padding: 16px 18px 18px;
+    /* Metin ve çubuk son boyutta; kutu clip-path ile ortadan açılır */
+  }
+
+  .hero-intro-terminal.is-open {
+    animation: termScreenOpen 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  html[data-viewport='tablet'] .hero-intro-terminal {
+    --term-clip-x: 10%;
+    --term-clip-r: 13px;
+  }
+
+  html[data-viewport='mobile'] .hero-intro-terminal {
+    --term-clip-x: 6%;
+    --term-clip-r: 12px;
+  }
+
+  html[data-viewport-compact='true'] .hero-intro-term-out {
+    max-height: min(38vh, 260px);
+  }
+
+  @keyframes termScreenOpen {
+    0% {
+      clip-path: inset(50% var(--term-clip-x) 50% var(--term-clip-x) round var(--term-clip-r));
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(8px) brightness(1.4);
+    }
+    40% {
+      opacity: 0.92;
+      filter: blur(2px) brightness(1.08);
+    }
+    100% {
+      clip-path: inset(0 0 0 0 round var(--term-clip-r));
+      opacity: 1;
+      transform: translateY(0);
+      filter: none;
+    }
+  }
+
+  .hero-intro-phase--term.is-active .hero-intro-terminal.is-open::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      180deg,
+      rgba(66, 186, 109, 0.12) 0%,
+      transparent 28%,
+      transparent 72%,
+      rgba(66, 186, 109, 0.06) 100%
+    );
+    pointer-events: none;
+    animation: termScanSweep 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+    opacity: 0;
+  }
+
+  @keyframes termScanSweep {
+    0% {
+      opacity: 0.9;
+      transform: translateY(-100%);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+  }
+
+  .hero-intro-scanlines {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.12;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.35) 2px,
+      rgba(0, 0, 0, 0.35) 4px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .hero-intro-terminal.is-open .hero-intro-scanlines {
+    animation: scanlineFade 1s ease 0.55s forwards;
+  }
+
+  @keyframes scanlineFade {
+    to {
+      opacity: 0.06;
+    }
+  }
+
+  .hero-intro-term-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.06em;
+  }
+
+  .hero-intro-term-bar span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .hero-intro-term-bar span:first-child {
+    background: #ff5f57;
+  }
+  .hero-intro-term-bar span:nth-child(2) {
+    background: #febc2e;
+  }
+  .hero-intro-term-bar span:nth-child(3) {
+    background: var(--brand-green);
+  }
+
+  .hero-intro-term-bar code {
+    margin-left: auto;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  .hero-intro-term-out {
+    margin: 0 0 4px;
+    font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, monospace;
+    font-size: clamp(11px, 1.7vw, 13px);
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+    color: color-mix(in srgb, var(--brand-green) 82%, #fff);
+    white-space: pre;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: min(52vh, 420px);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(66, 186, 109, 0.35) transparent;
+  }
+
+  .hero-intro-terminal:not(.is-ready) .hero-intro-cursor {
+    visibility: hidden;
+  }
+
+  .hero-intro-cursor {
+    display: inline-block;
+    margin-top: 4px;
+    font-family: ui-monospace, monospace;
+    font-size: 14px;
+    color: var(--brand-green);
+    animation: introCursorBlink 0.9s step-end infinite;
+  }
+
+  @keyframes introCursorBlink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .hero-intro-skip {
+    position: absolute;
+    right: clamp(16px, 4vw, 32px);
+    bottom: clamp(16px, 4vw, 32px);
+    z-index: 2;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.88);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .hero-intro-skip:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  .hero-intro-skip:focus-visible {
+    outline: 2px solid var(--brand-green);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-intro-terminal.is-open {
+      animation: none;
+      clip-path: inset(0 0 0 0 round var(--term-clip-r, 14px));
+      transform: none;
+      opacity: 1;
+      filter: none;
+    }
+    .hero-intro-phase--term.is-booting .hero-intro-open-flash,
+    .hero-intro-phase--term.is-active .hero-intro-terminal.is-open::before {
+      animation: none;
+    }
+  }
+
+  html[data-viewport='mobile'] .hero-intro-term-out {
+    max-height: min(46vh, 320px);
+    font-size: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .hero-intro-brand {
+      font-size: clamp(32px, 11vw, 52px);
+    }
+    .hero-intro-era {
+      font-size: clamp(13px, 3.8vw, 17px);
+      margin-top: 4px;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/hero-intro.ts';
+</script>

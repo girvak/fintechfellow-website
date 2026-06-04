@@ -1,0 +1,21 @@
+{
+  "name": "marketing-site-v2",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "redeploy": "bash scripts/redeploy.sh",
+    "redeploy:docker": "bash scripts/redeploy.sh",
+    "redeploy:dev": "bash scripts/redeploy.sh --dev",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.3.6"
+  }
+}

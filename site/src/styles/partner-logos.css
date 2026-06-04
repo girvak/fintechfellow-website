@@ -1,0 +1,109 @@
+/**
+ * Partner logo çekimleri — html[data-viewport] ile son kullanıcı ekranına göre ölçeklenir.
+ */
+
+.hpl-logo,
+.pv-logo-img,
+.partner-triangle-img,
+.together-step-logo img {
+  object-fit: contain;
+  object-position: center center;
+}
+
+.hpl-logo--odeal,
+.pv-logo-img--odeal,
+.partner-triangle-img.partner-logo--odeal {
+  object-position: center 42%;
+}
+
+.hpl-logo--42,
+.pv-logo-img--42,
+.partner-triangle-img.partner-logo--42,
+.together-step-logo img[alt='42 Türkiye'] {
+  object-position: center center;
+}
+
+.hpl-logo--girvak,
+.pv-logo-img--girvak,
+.partner-triangle-img.partner-logo--girvak {
+  object-position: center 48%;
+}
+
+.hpl-logo--odeal {
+  width: var(--logo-odeal-w, 96px);
+  height: auto;
+}
+.hpl-logo--42 {
+  width: var(--logo-42-w, 128px);
+  height: auto;
+  min-height: 28px;
+}
+.hpl-logo--girvak {
+  width: var(--logo-girvak-w, 124px);
+  height: auto;
+}
+
+.pv-logo-img {
+  max-width: min(80%, 260px);
+  max-height: var(--pv-logo-h, clamp(96px, 13vw, 140px));
+}
+
+.pv-logo-img--42 {
+  max-width: min(88%, 300px);
+  max-height: var(--pv-logo-42-h, clamp(104px, 15vw, 160px));
+}
+
+.together-step-logo img {
+  max-width: min(78%, 200px);
+  max-height: var(--together-logo-h, 64px);
+}
+
+.together-step-logo img[alt='42 Türkiye'] {
+  max-width: min(90%, 220px);
+  max-height: var(--together-logo-42-h, 72px);
+}
+
+.partner-triangle-img {
+  max-width: 100%;
+  max-height: var(--tri-logo-h, 44px);
+}
+
+.partner-triangle-img.partner-logo--odeal {
+  max-height: var(--tri-logo-odeal-h, 32px);
+  max-width: 88px;
+}
+
+.partner-triangle-img.partner-logo--42 {
+  max-height: var(--tri-logo-42-h, 32px);
+  max-width: 92px;
+}
+
+.partner-triangle-img.partner-logo--girvak {
+  max-height: var(--tri-logo-girvak-h, 38px);
+}
+
+html[data-viewport='tablet'] {
+  --logo-odeal-w: 72px;
+  --logo-42-w: 88px;
+  --logo-girvak-w: 92px;
+  --pv-logo-h: clamp(88px, 12vw, 120px);
+  --pv-logo-42-h: clamp(96px, 14vw, 140px);
+}
+
+html[data-viewport='mobile'] {
+  --logo-odeal-w: 65px;
+  --logo-42-w: 80px;
+  --logo-girvak-w: 84px;
+  --pv-logo-h: clamp(72px, 18vw, 100px);
+  --pv-logo-42-h: clamp(80px, 20vw, 112px);
+  --together-logo-h: 56px;
+  --together-logo-42-h: 62px;
+  --tri-logo-odeal-h: 28px;
+  --tri-logo-42-h: 28px;
+  --tri-logo-girvak-h: 32px;
+}
+
+html[data-viewport-compact='true'] .pv-logo-img,
+html[data-viewport-compact='true'] .together-step-logo img {
+  max-height: 56px;
+}

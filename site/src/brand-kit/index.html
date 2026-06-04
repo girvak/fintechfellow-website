@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Marka Kiti — FintechFellow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-primary: #1C71B7;
+    --blue-secondary: #2086C7;
+    --green: #42BA6D;
+    --ink: #0E1116;
+    --ink-soft: #4A5260;
+    --line: #E6E9EE;
+    --bg: #FBFBFC;
+    --card: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Rubik', system-ui, sans-serif; font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: var(--blue-primary); text-decoration: none; }
+  .mono { font-family: 'Rubik', system-ui, sans-serif; letter-spacing: -0.01em; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* ===== Top bar ===== */
+  .topbar { position: sticky; top: 0; z-index: 10; background: rgba(251,251,252,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .topbar-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; max-width: 1180px; margin: 0 auto; }
+  .topbar-brand { display: flex; align-items: center; gap: 12px; font-family: 'Rubik'; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: inherit; text-decoration: none; }
+  .topbar-brand:hover { color: var(--ink); }
+  a.hero-mark { color: inherit; text-decoration: none; cursor: pointer; }
+  a.hero-mark:hover .b { opacity: 0.92; }
+  .topbar-brand .dot { width: 10px; height: 10px; background: var(--blue-primary); border-radius: 2px; }
+  .topbar nav { display: flex; gap: 24px; }
+  .topbar nav a { color: var(--ink-soft); font-size: 13px; font-family: 'Rubik'; text-transform: lowercase; }
+  .topbar nav a:hover { color: var(--ink); }
+
+  /* ===== Hero / Cover ===== */
+  .hero { height: 100vh; min-height: 680px; background: var(--blue-primary); color: #fff; display: flex; flex-direction: column; justify-content: space-between; padding: 56px 64px 64px; position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; right: -180px; bottom: -180px; width: 720px; height: 720px; border-radius: 50%; background: rgba(255,255,255,0.04); pointer-events: none; }
+  .hero::after { content: ""; position: absolute; right: 8%; top: -120px; width: 360px; height: 360px; border-radius: 50%; background: rgba(66,186,109,0.18); pointer-events: none; }
+  .hero-top { display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+  .hero-mark { font-family: 'Rubik'; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+  .hero-mark .b { color: #fff; }
+  .hero-mark .g { color: var(--green); }
+  .hero-meta-tag { font-family: 'Rubik'; font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 0.18em; text-transform: uppercase; font-weight: 400; }
+
+  .hero-main { position: relative; z-index: 2; }
+  .hero-eyebrow { font-family: 'Rubik'; font-weight: 300; font-size: 14px; color: rgba(255,255,255,0.65); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 28px; }
+  .hero-wordmark { font-family: 'Rubik'; font-weight: 900; font-size: clamp(72px, 11vw, 168px); line-height: 0.92; letter-spacing: -0.04em; }
+  .hero-wordmark .g { color: var(--green); }
+  .hero-wordmark .w { color: #fff; }
+  .hero-line { width: 80px; height: 4px; background: var(--green); margin: 36px 0 28px; }
+  .hero-title { font-family: 'Rubik'; font-weight: 300; font-size: clamp(28px, 3vw, 40px); letter-spacing: -0.01em; line-height: 1.15; color: #fff; max-width: 720px; margin-bottom: 12px; }
+  .hero-year { font-family: 'Rubik'; font-weight: 300; font-size: 18px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+
+  .hero-bottom { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; z-index: 2; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.15); }
+  .hero-bottom .item .label { font-family: 'Rubik'; font-size: 11px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 400; margin-bottom: 8px; }
+  .hero-bottom .item .value { font-family: 'Rubik'; font-weight: 500; font-size: 16px; color: #fff; letter-spacing: -0.005em; }
+
+  .hero-scroll { position: absolute; left: 64px; bottom: 24px; display: flex; align-items: center; gap: 10px; font-family: 'Rubik'; font-size: 11px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.2em; z-index: 3; }
+  .hero-scroll .arrow { width: 28px; height: 1px; background: rgba(255,255,255,0.4); position: relative; }
+  .hero-scroll .arrow::after { content: ""; position: absolute; right: 0; top: 50%; width: 6px; height: 6px; border-right: 1px solid rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.5); transform: translateY(-50%) rotate(-45deg); }
+
+  /* ===== Sections ===== */
+  section { padding: 96px 0; border-top: 1px solid var(--line); }
+  #logo { border-top: 0; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 48px; gap: 32px; flex-wrap: wrap; }
+  .section-head .index { font-family: 'Rubik'; font-size: 13px; color: var(--blue-primary); }
+  .section-head h2 { font-family: 'Rubik'; font-weight: 600; font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.025em; margin: 6px 0 12px; line-height: 1.05; }
+  .section-head p { color: var(--ink-soft); max-width: 520px; margin: 0; font-size: 16px; }
+  .section-head .left { flex: 1 1 460px; }
+  .section-head .right { flex: 0 0 auto; max-width: 460px; }
+
+  /* ===== Logo grid ===== */
+  .logo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .logo-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+  .logo-preview { aspect-ratio: 16/6; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; padding: 36px 48px; }
+  .logo-preview.light { background: #FFFFFF; }
+  .logo-preview.blue  { background: var(--blue-primary); }
+  .logo-preview svg, .logo-preview img { width: 100%; max-width: 100%; height: auto; display: block; }
+  .logo-meta { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-top: 1px solid var(--line); gap: 12px; flex-wrap: wrap; }
+  .logo-meta .name { font-family: 'Rubik'; font-size: 13px; }
+  .logo-meta .name b { font-family: 'Rubik'; font-size: 16px; font-weight: 600; display: block; letter-spacing: -0.01em; margin-bottom: 2px; }
+  .logo-meta .downloads { display: flex; gap: 8px; }
+  .btn { font-family: 'Rubik'; font-size: 12px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; transition: all 0.15s; text-transform: lowercase; letter-spacing: 0.02em; }
+  .btn:hover { border-color: var(--ink); }
+  .btn.primary { background: var(--ink); color: white; border-color: var(--ink); }
+  .btn.primary:hover { background: var(--blue-primary); border-color: var(--blue-primary); }
+
+  /* ===== Colors ===== */
+  .ramps { display: flex; flex-direction: column; gap: 28px; }
+  .ramp { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 28px 28px; }
+  .ramp-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+  .ramp-role { font-family: 'Rubik'; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 400; }
+  .ramp-name { font-family: 'Rubik'; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; margin-top: 4px; }
+  .ramp-hint { font-size: 13px; color: var(--ink-soft); font-family: 'Rubik'; font-weight: 400; }
+  .ramp-row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
+  .ramp-chip { aspect-ratio: 3/4; border-radius: 10px; padding: 14px 14px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; color: var(--ink); transition: transform 0.15s, box-shadow 0.15s; position: relative; overflow: hidden; }
+  .ramp-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 24px -8px rgba(14,17,22,0.18); }
+  .ramp-chip .step { font-family: 'Rubik'; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.85; }
+  .ramp-chip .hex { font-family: 'Rubik'; font-size: 12px; font-weight: 400; letter-spacing: 0.02em; opacity: 0.9; }
+  .ramp-chip.primary { outline: 2px solid currentColor; outline-offset: -6px; }
+
+  .usage-rules { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; margin-top: 28px; }
+  .usage-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px 28px; }
+  .usage-role { font-family: 'Rubik'; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; font-weight: 400; }
+  .usage-pairs { display: flex; flex-direction: column; gap: 10px; }
+  .pair { display: flex; align-items: center; gap: 10px; font-family: 'Rubik'; font-size: 14px; font-weight: 400; }
+  .pair b { font-weight: 500; }
+  .pair .dot { width: 22px; height: 22px; border-radius: 999px; flex-shrink: 0; }
+  .ratio { }
+  .ratio-bar { display: flex; height: 56px; border-radius: 8px; overflow: hidden; margin-bottom: 14px; font-family: 'Rubik'; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+  .ratio-bar > div { display: flex; align-items: center; justify-content: center; }
+  .ratio-bar > div span { padding: 0 8px; }
+  .ratio-note { font-size: 13px; color: var(--ink-soft); margin: 0; font-family: 'Rubik'; }
+
+  /* ===== Typography ===== */
+  .typography { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .type-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 36px 36px 32px; }
+  .type-card.span-2 { grid-column: span 2; }
+  .type-card .role { font-family: 'Rubik'; font-size: 11px; color: var(--blue-primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .type-card .family { font-family: 'Rubik'; font-weight: 600; font-size: 36px; letter-spacing: -0.02em; margin-bottom: 28px; }
+  .type-card .sample.display { font-family: 'Rubik'; font-weight: 700; font-size: 64px; line-height: 1; letter-spacing: -0.035em; margin-bottom: 24px; }
+  .type-card .sample.body { font-family: 'Rubik'; font-size: 18px; line-height: 1.55; color: var(--ink); }
+  .type-card .sample.mono { font-family: 'Rubik'; font-size: 16px; line-height: 1.6; color: var(--ink); }
+  .type-card .stack { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+  .type-card .stack > div { font-family: 'Rubik'; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+  .type-card .stack > div b { display: block; color: var(--ink); font-family: inherit; font-weight: 500; font-size: 13px; margin-top: 4px; text-transform: none; letter-spacing: 0; }
+  .scale { display: grid; grid-template-columns: 120px 1fr; gap: 16px 32px; align-items: baseline; }
+  .scale .key { font-family: 'Rubik'; font-size: 11px; color: var(--ink-soft); padding-top: 8px; }
+  .scale .preview { font-family: 'Rubik'; letter-spacing: -0.025em; line-height: 1.05; }
+
+  /* ===== Rules ===== */
+  .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .rule { background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .rule .demo { aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .rule .demo.ok::before, .rule .demo.bad::before { content: ""; position: absolute; top: 14px; left: 14px; width: 22px; height: 22px; border-radius: 999px; z-index: 2; }
+  .rule .demo.ok::before { background: var(--green); }
+  .rule .demo.bad::before { background: #E14B4B; }
+  .rule .demo.ok::after, .rule .demo.bad::after { position: absolute; top: 14px; left: 44px; font-family: 'Rubik'; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; z-index: 2; }
+  .rule .demo.ok::after { content: "do"; color: var(--green); }
+  .rule .demo.bad::after { content: "don't"; color: #E14B4B; }
+  .rule .demo.light { background: #fff; }
+  .rule .demo.blue  { background: var(--blue-primary); }
+  .rule .demo.gray  { background: #DCE0E6; }
+  .rule .demo.gradient { background: linear-gradient(135deg, #ff7a59, #6c5ce7); }
+  .rule .demo.stretch img { transform: scaleX(1.6); }
+  .rule .demo.tinted img { filter: hue-rotate(140deg) saturate(2.5); }
+  .rule .demo img, .rule .demo .embed { width: 78%; max-width: 78%; height: auto; }
+  .rule .demo.tight img { width: 96%; max-width: 96%; }
+  .rule .copy { padding: 22px 24px; border-top: 1px solid var(--line); }
+  .rule .copy h4 { font-family: 'Rubik'; font-weight: 600; font-size: 17px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .rule .copy p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+
+  /* ===== Clear space + min size ===== */
+  .specs { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+  .spec-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 36px; }
+  .spec-card h3 { font-family: 'Rubik'; font-weight: 600; font-size: 22px; letter-spacing: -0.015em; margin: 0 0 6px; }
+  .spec-card .sub { color: var(--ink-soft); margin: 0 0 28px; font-size: 14px; }
+  .clearspace { position: relative; background: #fff; border-radius: 8px; padding: 64px; border: 1px dashed var(--line); }
+  .clearspace .frame { position: relative; padding: 64px; outline: 1px dashed var(--blue-primary); }
+  .clearspace .frame::before, .clearspace .frame::after { content: "x"; position: absolute; font-family: 'Rubik'; font-size: 11px; color: var(--blue-primary); }
+  .clearspace .frame::before { top: -8px; left: -8px; }
+  .clearspace .frame::after { bottom: -8px; right: -8px; }
+  .clearspace .logo-holder { background: #fff; overflow: hidden; position: relative; padding: 16px; }
+  .clearspace .logo-holder img { width: 100%; display: block; }
+  .clearspace .x-mark { position: absolute; font-family: 'Rubik'; font-size: 11px; color: var(--blue-primary); width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .clearspace .x-mark.t { top: 32px; left: 50%; transform: translateX(-50%); }
+  .clearspace .x-mark.b { bottom: 32px; left: 50%; transform: translateX(-50%); }
+  .clearspace .x-mark.l { left: 32px; top: 50%; transform: translateY(-50%); }
+  .clearspace .x-mark.r { right: 32px; top: 50%; transform: translateY(-50%); }
+
+  .minsize { display: flex; flex-direction: column; align-items: center; gap: 28px; padding: 32px 0; }
+  .minsize .step { display: flex; align-items: center; gap: 22px; }
+  .minsize .step .holder { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 12px 16px; overflow: hidden; display: flex; align-items: center; }
+  .minsize .step .holder img { width: 100%; display: block; }
+  .minsize .step .holder.s240 { width: 240px; }
+  .minsize .step .holder.s160 { width: 160px; }
+  .minsize .step .holder.s100 { width: 100px; }
+  .minsize .step .label { font-family: 'Rubik'; font-size: 12px; color: var(--ink-soft); }
+  .minsize .step .label b { display: block; color: var(--ink); font-family: 'Rubik'; font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+
+  /* ===== Footer ===== */
+  footer { padding: 56px 0 80px; border-top: 1px solid var(--line); margin-top: 32px; color: var(--ink-soft); font-size: 14px; }
+  footer .row { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  footer .mono { font-size: 12px; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: white; padding: 12px 20px; border-radius: 999px; font-family: 'Rubik'; font-size: 12px; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 100; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 860px) {
+    .container { padding: 0 20px; }
+    .topbar-inner { padding: 12px 20px; }
+    .topbar nav a:not([href="/"]) { display: none; }
+    .topbar nav { display: flex; gap: 16px; }
+    .hero { padding: 32px 28px 36px; min-height: 100vh; }
+    .hero-bottom { grid-template-columns: 1fr 1fr; gap: 18px; }
+    .hero-scroll { left: 28px; }
+    .logo-grid, .typography, .rules, .specs, .usage-rules { grid-template-columns: 1fr; }
+    .ramp-row { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); grid-auto-rows: auto; grid-auto-columns: auto; }
+    .ramp-chip { aspect-ratio: 1; }
+    .type-card .sample.display { font-size: 44px; }
+    section { padding: 64px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <div class="hero-mark"><span class="g">&lt;</span><span class="b">FintechFellow</span><span class="g">&gt;</span></div>
+    <div class="hero-meta-tag">BRAND GUIDELINES</div>
+  </div>
+
+  <div class="hero-main">
+    <div class="hero-eyebrow">Ödeal · 42 İstanbul · GİRVAK</div>
+    <div class="hero-wordmark">
+      <span class="g">&lt;</span><span class="w">Brand</span><br><span class="w">Kit</span><span class="g">&gt;</span>
+    </div>
+    <div class="hero-line"></div>
+    <div class="hero-title">The complete visual identity system for the Fintech&nbsp;Fellow program.</div>
+    <div class="hero-year">2026 · Edition 1.0</div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="item">
+      <div class="label">Program</div>
+      <div class="value">Fintech Fellow</div>
+    </div>
+    <div class="item">
+      <div class="label">Partners</div>
+      <div class="value">Ödeal · 42 İstanbul · GİRVAK</div>
+    </div>
+    <div class="item">
+      <div class="label">Last update</div>
+      <div class="value">May 20, 2026</div>
+    </div>
+    <div class="item">
+      <div class="label">Contents</div>
+      <div class="value">Logo · Color · Type · Rules</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Scroll <div class="arrow"></div></div>
+</header>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="topbar-brand" aria-label="FintechFellow ana sayfa"><span class="dot"></span> FintechFellow · Brand Kit</a>
+    <nav>
+      <a href="/">Ana sayfa</a>
+      <a href="#logo">logo</a>
+      <a href="#colors">colors</a>
+      <a href="#typography">typography</a>
+      <a href="#rules">rules</a>
+      <a href="#specs">specs</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ============ LOGO ============ -->
+<section id="logo">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="index mono">01 — Logo</div>
+        <h2>The mark</h2>
+      </div>
+      <div class="right">
+        <p>The FintechFellow wordmark sits between two chevrons — a nod to the code editor syntax that defines the work the fellows do every day. Four official lockups are available across light and dark backgrounds. Download as SVG for production, or PNG for quick use in slides and social.</p>
+      </div>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-card">
+        <div class="logo-preview light"><img id="logo-img-1" src="/assets/logos/logo-light.svg" alt="FintechFellow logo on white"></div>
+        <div class="logo-meta">
+          <div class="name"><b>Primary · Color</b>Blue & green on white</div>
+          <div class="downloads">
+            <button class="btn" data-dl-svg="/assets/logos/logo-light.svg" data-name="fintechfellow-primary">SVG</button>
+            <button class="btn primary" data-dl-png="/assets/logos/logo-light.svg" data-name="fintechfellow-primary">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-card">
+        <div class="logo-preview blue"><img id="logo-img-2" src="/assets/logos/logo-dark.svg" alt="FintechFellow logo on dark blue"></div>
+        <div class="logo-meta">
+          <div class="name"><b>Reverse · Color</b>White & green on Fellow Blue</div>
+          <div class="downloads">
+            <button class="btn" data-dl-svg="/assets/logos/logo-dark.svg" data-name="fintechfellow-reverse">SVG</button>
+            <button class="btn primary" data-dl-png="/assets/logos/logo-dark.svg" data-name="fintechfellow-reverse">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-card">
+        <div class="logo-preview light"><img id="logo-img-3" src="/assets/logos/logo-light-stacked.svg" alt="FintechFellow logo mono dark"></div>
+        <div class="logo-meta">
+          <div class="name"><b>Mono · Dark</b>Single-color dark on white</div>
+          <div class="downloads">
+            <button class="btn" data-dl-svg="/assets/logos/logo-light-stacked.svg" data-name="fintechfellow-mono-dark">SVG</button>
+            <button class="btn primary" data-dl-png="/assets/logos/logo-light-stacked.svg" data-name="fintechfellow-mono-dark">PNG</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo-card">
+        <div class="logo-preview blue"><img id="logo-img-4" src="/assets/logos/logo-dark-stacked.svg" alt="FintechFellow logo mono white"></div>
+        <div class="logo-meta">
+          <div class="name"><b>Mono · Light</b>Single-color white on Fellow Blue</div>
+          <div class="downloads">
+            <button class="btn" data-dl-svg="/assets/logos/logo-dark-stacked.svg" data-name="fintechfellow-mono-light">SVG</button>
+            <button class="btn primary" data-dl-png="/assets/logos/logo-dark-stacked.svg" data-name="fintechfellow-mono-light">PNG</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLORS ============ -->
+<section id="colors">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="index mono">02 — Color</div>
+        <h2>Palette</h2>
+      </div>
+      <div class="right">
+        <p>The palette is anchored by two confident blues and an optimistic green, with a neutral gray ramp for type and surfaces. Each main color comes with five compatible tints — lighter for backgrounds & states, darker for emphasis. Click any swatch to copy the hex value.</p>
+      </div>
+    </div>
+
+    <div class="ramps">
+      <div class="ramp">
+        <div class="ramp-head">
+          <div>
+            <div class="ramp-role">Primary</div>
+            <div class="ramp-name">Fellow Blue</div>
+          </div>
+          <div class="ramp-hint">Headers, primary actions, brand surfaces</div>
+        </div>
+        <div class="ramp-row">
+          <div class="ramp-chip" data-hex="#EEF5FA" style="background:#EEF5FA"><span class="step">50</span><span class="hex">#EEF5FA</span></div>
+          <div class="ramp-chip" data-hex="#D2E3F0" style="background:#D2E3F0"><span class="step">100</span><span class="hex">#D2E3F0</span></div>
+          <div class="ramp-chip" data-hex="#6BA5D2" style="background:#6BA5D2;color:#fff"><span class="step">300</span><span class="hex">#6BA5D2</span></div>
+          <div class="ramp-chip primary" data-hex="#1C71B7" style="background:#1C71B7;color:#fff"><span class="step">500 ★</span><span class="hex">#1C71B7</span></div>
+          <div class="ramp-chip" data-hex="#155A93" style="background:#155A93;color:#fff"><span class="step">700</span><span class="hex">#155A93</span></div>
+          <div class="ramp-chip" data-hex="#0E3F69" style="background:#0E3F69;color:#fff"><span class="step">900</span><span class="hex">#0E3F69</span></div>
+        </div>
+      </div>
+
+      <div class="ramp">
+        <div class="ramp-head">
+          <div>
+            <div class="ramp-role">Secondary</div>
+            <div class="ramp-name">Signal Blue</div>
+          </div>
+          <div class="ramp-hint">Links, highlights, chevron mark</div>
+        </div>
+        <div class="ramp-row">
+          <div class="ramp-chip" data-hex="#EAF4FB" style="background:#EAF4FB"><span class="step">50</span><span class="hex">#EAF4FB</span></div>
+          <div class="ramp-chip" data-hex="#CDE6F4" style="background:#CDE6F4"><span class="step">100</span><span class="hex">#CDE6F4</span></div>
+          <div class="ramp-chip" data-hex="#6AB1DC" style="background:#6AB1DC;color:#fff"><span class="step">300</span><span class="hex">#6AB1DC</span></div>
+          <div class="ramp-chip primary" data-hex="#2086C7" style="background:#2086C7;color:#fff"><span class="step">500 ★</span><span class="hex">#2086C7</span></div>
+          <div class="ramp-chip" data-hex="#1A6B9F" style="background:#1A6B9F;color:#fff"><span class="step">700</span><span class="hex">#1A6B9F</span></div>
+          <div class="ramp-chip" data-hex="#114B70" style="background:#114B70;color:#fff"><span class="step">900</span><span class="hex">#114B70</span></div>
+        </div>
+      </div>
+
+      <div class="ramp">
+        <div class="ramp-head">
+          <div>
+            <div class="ramp-role">Accent</div>
+            <div class="ramp-name">Fellow Green</div>
+          </div>
+          <div class="ramp-hint">Success, growth, &lt;Fellow&gt; accents</div>
+        </div>
+        <div class="ramp-row">
+          <div class="ramp-chip" data-hex="#ECF8F1" style="background:#ECF8F1"><span class="step">50</span><span class="hex">#ECF8F1</span></div>
+          <div class="ramp-chip" data-hex="#D1EFDC" style="background:#D1EFDC"><span class="step">100</span><span class="hex">#D1EFDC</span></div>
+          <div class="ramp-chip" data-hex="#84D29F" style="background:#84D29F;color:#0E1116"><span class="step">300</span><span class="hex">#84D29F</span></div>
+          <div class="ramp-chip primary" data-hex="#42BA6D" style="background:#42BA6D;color:#fff"><span class="step">500 ★</span><span class="hex">#42BA6D</span></div>
+          <div class="ramp-chip" data-hex="#308F53" style="background:#308F53;color:#fff"><span class="step">700</span><span class="hex">#308F53</span></div>
+          <div class="ramp-chip" data-hex="#1F6539" style="background:#1F6539;color:#fff"><span class="step">900</span><span class="hex">#1F6539</span></div>
+        </div>
+      </div>
+
+      <div class="ramp">
+        <div class="ramp-head">
+          <div>
+            <div class="ramp-role">Neutral</div>
+            <div class="ramp-name">Ink &amp; Gray</div>
+          </div>
+          <div class="ramp-hint">Type, surfaces, dividers</div>
+        </div>
+        <div class="ramp-row">
+          <div class="ramp-chip" data-hex="#FFFFFF" style="background:#FFFFFF;border:1px solid var(--line)"><span class="step">0</span><span class="hex">#FFFFFF</span></div>
+          <div class="ramp-chip" data-hex="#FBFBFC" style="background:#FBFBFC;border:1px solid var(--line)"><span class="step">50</span><span class="hex">#FBFBFC</span></div>
+          <div class="ramp-chip" data-hex="#E6E9EE" style="background:#E6E9EE"><span class="step">100</span><span class="hex">#E6E9EE</span></div>
+          <div class="ramp-chip" data-hex="#C7CCD3" style="background:#C7CCD3"><span class="step">200</span><span class="hex">#C7CCD3</span></div>
+          <div class="ramp-chip" data-hex="#8E97A4" style="background:#8E97A4;color:#fff"><span class="step">400</span><span class="hex">#8E97A4</span></div>
+          <div class="ramp-chip" data-hex="#4A5260" style="background:#4A5260;color:#fff"><span class="step">600</span><span class="hex">#4A5260</span></div>
+          <div class="ramp-chip" data-hex="#2A2F38" style="background:#2A2F38;color:#fff"><span class="step">800</span><span class="hex">#2A2F38</span></div>
+          <div class="ramp-chip primary" data-hex="#0E1116" style="background:#0E1116;color:#fff"><span class="step">900 ★</span><span class="hex">#0E1116</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="usage-rules">
+      <div class="usage-card">
+        <div class="usage-role">Combinations that work</div>
+        <div class="usage-pairs">
+          <div class="pair"><span class="dot" style="background:#1C71B7"></span><span class="dot" style="background:#FFFFFF;border:1px solid var(--line)"></span><b>Fellow Blue on white</b></div>
+          <div class="pair"><span class="dot" style="background:#FFFFFF;border:1px solid var(--line)"></span><span class="dot" style="background:#1C71B7"></span><b>White on Fellow Blue</b></div>
+          <div class="pair"><span class="dot" style="background:#42BA6D"></span><span class="dot" style="background:#FFFFFF;border:1px solid var(--line)"></span><b>Green accent on white</b></div>
+          <div class="pair"><span class="dot" style="background:#EEF5FA"></span><span class="dot" style="background:#1C71B7"></span><b>Tint background + brand</b></div>
+        </div>
+      </div>
+      <div class="usage-card">
+        <div class="usage-role">60 / 30 / 10 ratio</div>
+        <div class="ratio">
+          <div class="ratio-bar">
+            <div style="width:60%;background:#FBFBFC;border:1px solid var(--line);"><span>60% Neutral</span></div>
+            <div style="width:30%;background:#1C71B7;color:#fff;"><span>30% Blue</span></div>
+            <div style="width:10%;background:#42BA6D;color:#fff;"><span>10% Green</span></div>
+          </div>
+          <p class="ratio-note">Use neutrals to carry layouts, Fellow Blue for brand presence, and Fellow Green sparingly as the accent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TYPOGRAPHY ============ -->
+<section id="typography">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="index mono">03 — Typography</div>
+        <h2>Type system</h2>
+      </div>
+      <div class="right">
+        <p><b>Rubik</b> is the FintechFellow corporate typeface. It is used across every digital and printed material — headings, body, UI, labels — in four weights: Light, Regular, Bold, Black. Available free from Google Fonts.</p>
+      </div>
+    </div>
+
+    <div class="typography">
+      <div class="type-card span-2">
+        <div class="role">Corporate typeface</div>
+        <div class="family" style="font-weight: 900;">Rubik</div>
+        <div class="sample display" style="font-weight: 900;">&lt;Build the next<br>generation of fintech&gt;</div>
+        <div class="stack">
+          <div>Designer<b>Hubert &amp; Fischer</b></div>
+          <div>Weights<b>Light 300 · Regular 400 · Bold 700 · Black 900</b></div>
+          <div>License<b>SIL Open Font, free</b></div>
+          <div>Source<b>fonts.google.com/specimen/Rubik</b></div>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="role">Weights</div>
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 4px;">
+          <div style="font-family:'Rubik'; font-weight:300; font-size:32px; letter-spacing:-0.01em;">Rubik Light</div>
+          <div style="font-family:'Rubik'; font-weight:400; font-size:32px; letter-spacing:-0.01em;">Rubik Regular</div>
+          <div style="font-family:'Rubik'; font-weight:700; font-size:32px; letter-spacing:-0.01em;">Rubik Bold</div>
+          <div style="font-family:'Rubik'; font-weight:900; font-size:32px; letter-spacing:-0.01em;">Rubik Black</div>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="role">Body sample</div>
+        <div class="sample body" style="font-weight: 400; margin-top: 8px;">Ödeal Fintech Fellow is a program designed to equip young developers with the technical skills, mentorship, and industry exposure to thrive in financial technology — at no cost to the fellow.</div>
+        <div class="stack">
+          <div>Use for<b>Paragraphs, UI, captions</b></div>
+          <div>Min size<b>14px</b></div>
+        </div>
+      </div>
+
+      <div class="type-card span-2">
+        <div class="role">Scale</div>
+        <div class="scale">
+          <div class="key">Display · 84/0.96 · Black 900</div>
+          <div class="preview" style="font-size: 64px; font-weight: 900;">Bracket the future.</div>
+          <div class="key">H1 · 48/1.05 · Bold 700</div>
+          <div class="preview" style="font-size: 42px; font-weight: 700;">Section heading.</div>
+          <div class="key">H2 · 32/1.15 · Bold 700</div>
+          <div class="preview" style="font-size: 28px; font-weight: 700;">Subheading line.</div>
+          <div class="key">Body · 16/1.55 · Regular 400</div>
+          <div class="preview" style="font-size: 16px; font-weight: 400; letter-spacing: 0;">Body copy is set in Rubik Regular at 16px with 1.55 line height. Use 18–20px for longer reads.</div>
+          <div class="key">Caption · 13/1.4 · Light 300</div>
+          <div class="preview" style="font-size: 13px; font-weight: 300; color: var(--ink-soft);">Light weight reads softer — reserve for supporting captions and metadata.</div>
+          <div class="key">Meta · 11/1.4 · Regular 400</div>
+          <div class="preview mono" style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); font-weight: 400;">Tag · cohort · last updated</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RULES ============ -->
+<section id="rules">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="index mono">04 — Rules</div>
+        <h2>How to use</h2>
+      </div>
+      <div class="right">
+        <p>Keep the logo legible, consistent, and recognizable in every context. The mark is the most important asset of the brand — these guidelines protect it.</p>
+      </div>
+    </div>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="demo light ok"><img src="/assets/logos/logo-light.svg" alt=""></div>
+        <div class="copy">
+          <h4>Use on white</h4>
+          <p>Default usage. White background gives the primary mark maximum contrast and clarity.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="demo blue ok"><img src="/assets/logos/logo-dark.svg" alt=""></div>
+        <div class="copy">
+          <h4>Use on Fellow Blue</h4>
+          <p>Switch to the dark lockup whenever the background is Fellow Blue or darker than #6B7785.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="demo gray ok"><img src="/assets/logos/logo-light.svg" alt=""></div>
+        <div class="copy">
+          <h4>Use on neutral surfaces</h4>
+          <p>Light neutrals under #DCE0E6 are safe. Keep clearspace, even when colors are subtle.</p>
+        </div>
+      </div>
+
+      <div class="rule">
+        <div class="demo gradient stretch bad"><img src="/assets/logos/logo-light.svg" alt=""></div>
+        <div class="copy">
+          <h4>Don't stretch or distort</h4>
+          <p>Always scale the logo proportionally. Never squash, skew, or rotate the mark.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="demo light tinted bad"><img src="/assets/logos/logo-light.svg" alt=""></div>
+        <div class="copy">
+          <h4>Don't recolor the wordmark</h4>
+          <p>The wordmark only renders in black or white. Do not apply gradients, hue shifts, or off-palette colors.</p>
+        </div>
+      </div>
+      <div class="rule">
+        <div class="demo light bad tight"><img src="/assets/logos/logo-light.svg" alt=""></div>
+        <div class="copy">
+          <h4>Don't crowd the mark</h4>
+          <p>Respect the clearspace defined in section 05. Other elements must stay outside that boundary.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPECS ============ -->
+<section id="specs">
+  <div class="container">
+    <div class="section-head">
+      <div class="left">
+        <div class="index mono">05 — Specs</div>
+        <h2>Clearspace &amp; sizing</h2>
+      </div>
+      <div class="right">
+        <p>Always reserve enough breathing room around the mark, and never use it smaller than the minimum legible size. The unit <span class="mono">x</span> equals the height of the chevron bracket.</p>
+      </div>
+    </div>
+
+    <div class="specs">
+      <div class="spec-card">
+        <h3>Clearspace</h3>
+        <p class="sub">Minimum clearspace on all sides equals <span class="mono">x</span> — the cap height of the wordmark.</p>
+        <div class="clearspace">
+          <div class="frame">
+            <div class="logo-holder">
+              <img src="/assets/logos/logo-light.svg" alt="">
+            </div>
+          </div>
+          <div class="x-mark t">x</div>
+          <div class="x-mark b">x</div>
+          <div class="x-mark l">x</div>
+          <div class="x-mark r">x</div>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <h3>Minimum size</h3>
+        <p class="sub">Don't use the mark smaller than 100&nbsp;px on screen or 24&nbsp;mm in print.</p>
+        <div class="minsize">
+          <div class="step">
+            <div class="holder s240"><img src="/assets/logos/logo-light.svg" alt=""></div>
+            <div class="label"><b>240 px</b>recommended</div>
+          </div>
+          <div class="step">
+            <div class="holder s160"><img src="/assets/logos/logo-light.svg" alt=""></div>
+            <div class="label"><b>160 px</b>acceptable</div>
+          </div>
+          <div class="step">
+            <div class="holder s100"><img src="/assets/logos/logo-light.svg" alt=""></div>
+            <div class="label"><b>100 px</b>minimum</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div>
+        <div style="font-family:'Rubik'; font-weight:600; font-size: 18px; letter-spacing:-0.01em; color: var(--ink); margin-bottom: 6px;">FintechFellow Brand Kit</div>
+        <div>Ödeal Fintech Fellow Programı · v1.0 · 2026 · <a href="/">fintechfellow.com</a></div>
+      </div>
+      <div class="mono" style="text-align: right;">
+        <div>partners</div>
+        <div style="color: var(--ink); margin-top: 4px;">Ödeal  ·  42 İstanbul  ·  GİRVAK</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">copied</div>
+
+<script>
+  // Click-to-copy color
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), 1400);
+  }
+  document.querySelectorAll('.ramp-chip').forEach(sw => {
+    sw.addEventListener('click', async () => {
+      const hex = sw.dataset.hex;
+      try {
+        await navigator.clipboard.writeText(hex);
+      } catch (e) {}
+      sw.classList.add('copied');
+      showToast(hex + ' copied');
+      setTimeout(() => sw.classList.remove('copied'), 1200);
+    });
+  });
+
+  // SVG download
+  document.querySelectorAll('[data-dl-svg]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.dlSvg;
+      const name = btn.dataset.name + '.svg';
+      const resp = await fetch(url);
+      const blob = await resp.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast(name + ' downloaded');
+    });
+  });
+
+  // PNG download — rasterize SVG to canvas
+  document.querySelectorAll('[data-dl-png]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const url = btn.dataset.dlPng;
+      const name = btn.dataset.name + '.png';
+      const resp = await fetch(url);
+      const svgText = await resp.text();
+      const blob = new Blob([svgText], {type: 'image/svg+xml'});
+      const objUrl = URL.createObjectURL(blob);
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = objUrl; });
+      // export at high-res native aspect (viewBox is 1150x331)
+      const W = 2300, H = 662;
+      const canvas = document.createElement('canvas');
+      canvas.width = W; canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, W, H);
+      URL.revokeObjectURL(objUrl);
+      canvas.toBlob(b => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = name;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showToast(name + ' downloaded');
+      }, 'image/png');
+    });
+  });
+
+  // Smooth scroll (yalnızca sayfa içi #anchor linkleri; / gibi dış linklere dokunma)
+  document.querySelectorAll('.topbar nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: target.offsetTop - 60, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

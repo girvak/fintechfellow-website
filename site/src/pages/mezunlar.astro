@@ -1,0 +1,1164 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import SubpageCTA from '../components/SubpageCTA.astro';
+import Reveal from '../components/Reveal.astro';
+import { alumni, alumniCohorts, alumniByCohort, alumniCountByPath } from '../data/alumni';
+
+const cohortFellowCount = (cohortId: string, status: (typeof alumniCohorts)[number]['status']) =>
+  status === 'published' ? alumniByCohort(cohortId).length : 0;
+
+const cohort1Alumni = alumniByCohort('1');
+
+type PathKey = 'civil' | 'mis' | 'comp-eng';
+
+const alumniPaths: Array<{
+  id: PathKey | 'you';
+  label: string;
+  tone: 'blue' | 'green';
+  add?: boolean;
+}> = [
+  { id: 'civil', label: 'İnşaat Mühendisliği', tone: 'blue' },
+  { id: 'mis', label: 'Yönetim Bilişim Sistemleri', tone: 'green' },
+  { id: 'comp-eng', label: 'Bilgisayar Mühendisliği', tone: 'blue' },
+  { id: 'you', label: 'Peki sen?', tone: 'green', add: true },
+];
+---
+
+<Base
+  title="Mezunlar — FintechFellow"
+  description="FintechFellow mezunlarının hikayeleri. İnşaat mühendisliği, yönetim bilişim sistemleri ve bilgisayar mühendisliği geçmişinden software engineer kariyerine."
+>
+  <Nav darkHero />
+
+  <div class="mezunlar-hero">
+    <PageHero eyebrow="Mezunlar">
+      <Fragment slot="title">Mezunlarımızın <span class="g">Hikayeleri</span></Fragment>
+      <Fragment slot="sub">
+        Her Fellow farklı bir geçmişten geldi. Aynı kariyer yoluna çıktı.
+      </Fragment>
+    </PageHero>
+  </div>
+
+  <!-- ══ MEZUNLARIMIZ (dönem sekmeleri) ══ -->
+  <section class="sp-section mezunlar-roster" id="mezunlarimiz">
+    <div class="container">
+      <div class="roster-head reveal">
+        <div class="sec-eyebrow">Mezunlarımız</div>
+        <h2 class="sec-title">Dönem Dönem <span class="g">Fellow'lar</span></h2>
+      </div>
+
+      <div class="cohort-tabs-wrap reveal-group" data-cohort-tabs>
+        <div class="cohort-tabs reveal-child" role="tablist" aria-label="Mezun dönemleri">
+          {alumniCohorts.map((c, i) => (
+            <button
+              type="button"
+              class:list={['cohort-tab', { 'is-active': i === 0 }]}
+              role="tab"
+              id={`cohort-tab-${c.id}`}
+              aria-controls={`cohort-panel-${c.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-cohort={c.id}
+            >
+              <span class="cohort-tab-label">{c.label}</span>
+              <span class="cohort-tab-badge">{cohortFellowCount(c.id, c.status)} Fellow</span>
+            </button>
+          ))}
+        </div>
+
+        <div class="cohort-panels reveal-child">
+        {alumniCohorts.map((c, i) => (
+          <div
+            id={`cohort-panel-${c.id}`}
+            class:list={['cohort-panel', { 'is-active': i === 0 }]}
+            role="tabpanel"
+            aria-labelledby={`cohort-tab-${c.id}`}
+            hidden={i !== 0}
+          >
+            {c.status === 'published' ? (
+              <div class="roster-grid">
+                  {alumniByCohort(c.id).map((a) => (
+                    <article class="roster-card">
+                      <div class="roster-photo-wrap">
+                        {a.photo ? (
+                          <img
+                            class="roster-photo"
+                            src={a.photo}
+                            alt={a.name}
+                            width="72"
+                            height="72"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <div class:list={['roster-photo roster-photo--fallback', `av-${a.bg}`]}>
+                            {a.initials}
+                          </div>
+                        )}
+                      </div>
+                      <h3 class="roster-name">
+                        <span class="roster-first">{a.firstName}</span>
+                        <span class="roster-last">{a.lastName}</span>
+                      </h3>
+                      <p class="roster-role">{a.position} · {a.company}</p>
+                      {a.linkedin && (
+                        <div class="roster-social">
+                          <a
+                            href={a.linkedin}
+                            class="roster-social-link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${a.name} LinkedIn`}
+                          >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                            LinkedIn
+                          </a>
+                        </div>
+                      )}
+                    </article>
+                  ))}
+              </div>
+            ) : (
+              <div class="cohort-empty">
+                <div class="cohort-empty-visual" aria-hidden="true">
+                  <span class="cohort-empty-ring" />
+                  <span class="cohort-empty-num">{c.id}</span>
+                </div>
+                <p class="cohort-empty-title">{c.emptyTitle}</p>
+                {c.emptyText && <p class="cohort-empty-text">{c.emptyText}</p>}
+                <a href="/basvur" class="btn-primary">
+                  Başvur <span class="arrow">→</span>
+                </a>
+              </div>
+            )}
+          </div>
+        ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MEZUN YORUMLARI (kaydırmalı) ══ -->
+  <section class="sp-section sp-section--soft mezunlar-quotes" id="yorumlar" aria-labelledby="yorumlar-title">
+    <div class="container">
+      <div class="quotes-block reveal-group">
+      <div class="quotes-head reveal-child">
+        <div class="sec-eyebrow">Mezunların sözleri</div>
+        <h2 class="sec-title" id="yorumlar-title">Kendi <span class="g">Deneyimleriyle Anlattılar</span></h2>
+        <p class="sec-sub quotes-intro">
+          1. Dönem mezunlarının program deneyimini kendi sözleriyle paylaştığı yorumlar.
+        </p>
+      </div>
+
+      <div class="quotes-carousel reveal-child">
+        <div class="quotes-fade quotes-fade--left" aria-hidden="true"></div>
+        <div class="quotes-fade quotes-fade--right" aria-hidden="true"></div>
+
+        <button type="button" class="quotes-nav quotes-nav--prev" aria-label="Önceki yorum">
+          <span aria-hidden="true">‹</span>
+        </button>
+        <button type="button" class="quotes-nav quotes-nav--next" aria-label="Sonraki yorum">
+          <span aria-hidden="true">›</span>
+        </button>
+
+        <div class="quotes-viewport" data-quotes-scroller tabindex="0" aria-label="Mezun yorumları — yatay kaydır">
+          <div class="quotes-track" role="list">
+            {cohort1Alumni.map((a, i) => (
+              <article
+                class:list={['quote-slide', { 'quote-slide--alt': i % 2 === 1 }]}
+                role="listitem"
+              >
+                <div class="quote-copy-card">
+                  <header class="quote-copy-head">
+                    <div class="quote-avatar" aria-hidden="true">
+                      {a.photo ? (
+                        <img
+                          class="quote-avatar-img"
+                          src={a.photo}
+                          alt=""
+                          width="200"
+                          height="200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div class:list={['quote-avatar-img quote-avatar-img--fallback', `av-${a.bg}`]}>
+                          {a.initials}
+                        </div>
+                      )}
+                    </div>
+                    <div class="quote-copy-meta">
+                      <h3 class="quote-copy-name">{a.name}</h3>
+                      <p class="quote-copy-role">{a.position} · {a.company}</p>
+                      <span class="quote-cohort-tag">{a.cohort}</span>
+                    </div>
+                    {a.linkedin && (
+                      <a
+                        href={a.linkedin}
+                        class="quote-copy-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${a.name} LinkedIn`}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                      </a>
+                    )}
+                  </header>
+
+                  <p class="quote-copy-path">
+                    <span>{a.before}</span>
+                    <span class="quote-copy-path-arrow" aria-hidden="true">→</span>
+                    <span class="quote-copy-path-after">{a.after}</span>
+                  </p>
+
+                  <blockquote class="quote-copy-text">
+                    <p>{a.quote}</p>
+                  </blockquote>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="quotes-dots" role="tablist" aria-label="Yorum sırası"></div>
+      <p class="quotes-hint">Kaydırarak veya oklarla diğer yorumları görüntüleyebilirsin.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ GELİNEN GEÇMİŞLER ══ -->
+  <section class="sp-section paths" id="gecmisler">
+    <div class="container">
+      <div class="paths-block reveal-group">
+      <div class="paths-head reveal-child">
+        <div class="sec-eyebrow">Gelinen geçmişler</div>
+        <h2 class="sec-title">Bölümün Değil<br /><span class="g">Merakın Önemi Var</span></h2>
+        <p class="sec-sub paths-intro">
+          1. Dönem mezunları arasında inşaat mühendisi, yönetim bilişim sistemleri ve bilgisayar
+          mühendisliği geçmişi var. Ortak noktaları ise yazılıma merak ve öğrenme isteği.
+        </p>
+      </div>
+
+      <div class="paths-grid">
+        {alumniPaths.map((p, i) => {
+          const pathCount = p.add ? 0 : alumniCountByPath(p.id);
+          const CardTag = p.add ? 'a' : 'article';
+          return (
+            <CardTag
+              href={p.add ? '/basvur' : undefined}
+              class:list={[
+                'path-card reveal-child',
+                { 'path-card--cta': p.add, [`path-card--${p.tone}`]: !p.add },
+              ]}
+            >
+              <p class="path-label">
+                {p.id === 'you' ? (
+                  <>
+                    Peki<br />sen?
+                  </>
+                ) : (
+                  p.label
+                )}
+              </p>
+              <div class:list={['path-icon', `path-icon--${p.tone}`]} aria-hidden="true">
+                {p.id === 'civil' && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01" />
+                  </svg>
+                )}
+                {p.id === 'mis' && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                )}
+                {p.id === 'comp-eng' && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                )}
+                {p.id === 'you' && (
+                  <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+              </div>
+              {p.add ? (
+                <span class="path-cta">Hemen başvur <span class="path-cta-arrow" aria-hidden="true">→</span></span>
+              ) : (
+                <span class="path-count" aria-label={`${pathCount} mezun`}>×{pathCount}</span>
+              )}
+            </CardTag>
+          );
+        })}
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <SubpageCTA
+    title='Bir Sonraki<br><span class="g">Hikaye Senin</span>'
+    sub="15 kişiye kadar alınacaktır · Ücretsiz başvuru"
+  />
+
+  <Reveal />
+  <Footer />
+</Base>
+
+<script src="../scripts/mezunlar-tabs.ts"></script>
+<script src="../scripts/mezunlar-quotes.ts"></script>
+
+<style>
+/* Mezunlar hero — paydaşlar ile aynı dolgu / yükseklik */
+.mezunlar-hero :global(.sp-hero-content) {
+  max-width: 920px;
+}
+
+.mezunlar-hero :global(.sp-hero-sub) {
+  color: rgba(255, 255, 255, 0.52);
+  max-width: none;
+  line-height: 1.65;
+}
+
+/* ── MEZUNLARIMIZ — dönem sekmeleri ── */
+.mezunlar-roster {
+  background: var(--bg);
+}
+
+.roster-head {
+  margin-bottom: 40px;
+}
+
+.roster-intro {
+  margin-bottom: 0;
+}
+
+.cohort-tabs-wrap {
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+
+.cohort-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.cohort-tab {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 18px 24px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.cohort-tab:hover:not(.is-active) {
+  background: var(--bg-soft);
+}
+
+.cohort-tab.is-active {
+  background: var(--blue-50);
+  border-bottom-color: var(--brand-green);
+}
+
+.cohort-tab-label {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.cohort-tab-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.cohort-tab.is-active .cohort-tab-badge {
+  color: var(--brand-blue);
+}
+
+.cohort-panels {
+  min-height: 0;
+}
+
+.cohort-panel {
+  display: none;
+  padding: clamp(28px, 4vw, 40px);
+  background: #fff;
+  animation: rosterFade 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cohort-panel.is-active {
+  display: block;
+}
+
+@keyframes rosterFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Yorum bloğu — başlık ve karusel aynı grupta sırayla */
+.quotes-block.reveal-group.in .quotes-head.reveal-child {
+  transition-delay: 0.04s;
+}
+
+.quotes-block.reveal-group.in .quotes-carousel.reveal-child {
+  transition-delay: 0.14s;
+}
+
+.roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  grid-auto-rows: auto;
+  gap: 14px 12px;
+  max-width: 100%;
+  justify-content: start;
+}
+
+.roster-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+  min-width: 0;
+}
+
+.roster-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue-200);
+  box-shadow: 0 16px 36px -20px rgba(28, 113, 183, 0.18);
+}
+
+.cohort-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: clamp(280px, 36vw, 360px);
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.cohort-empty-visual {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 24px;
+}
+
+.cohort-empty-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--brand-green) 45%, var(--line));
+  animation: cohortSpin 24s linear infinite;
+}
+
+@keyframes cohortSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cohort-empty-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 36px;
+  letter-spacing: -0.04em;
+  color: var(--ink-muted);
+}
+
+.cohort-empty-title {
+  font-size: clamp(20px, 2.5vw, 24px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.cohort-empty-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 42ch;
+  margin: 0 0 24px;
+}
+
+.cohort-empty .btn-primary {
+  margin-top: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cohort-empty-ring {
+    animation: none;
+  }
+}
+
+.roster-photo-wrap {
+  margin-bottom: 10px;
+}
+
+.roster-photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid #fff;
+  box-shadow: 0 6px 18px -8px rgba(28, 113, 183, 0.22);
+}
+
+.roster-photo--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.roster-photo--fallback.av-lm {
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-green));
+}
+
+.roster-photo--fallback.av-gd {
+  background: linear-gradient(135deg, var(--brand-green), var(--brand-blue-light));
+}
+
+.roster-photo--fallback.av-bd {
+  background: linear-gradient(135deg, var(--blue-800), var(--brand-blue));
+}
+
+.roster-name {
+  margin: 0 0 6px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.roster-first,
+.roster-last {
+  display: block;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.roster-role {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.roster-social {
+  margin-top: auto;
+}
+
+.roster-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--brand-blue);
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: gap 0.2s, color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.roster-social-link svg {
+  width: 13px;
+  height: 13px;
+}
+
+.roster-social-link:hover {
+  gap: 6px;
+  color: var(--brand-green);
+  border-color: var(--green-200);
+  background: var(--green-50);
+}
+
+/* ── MEZUN YORUMLARI — minimal yatay kart akışı ── */
+.mezunlar-quotes {
+  position: relative;
+  overflow: hidden;
+}
+
+.mezunlar-quotes .container {
+  position: relative;
+  z-index: 1;
+}
+
+.quotes-head {
+  margin-bottom: clamp(32px, 4vw, 40px);
+  max-width: 640px;
+}
+
+.quotes-head .sec-title {
+  margin-bottom: 12px;
+}
+
+.quotes-intro {
+  margin-bottom: 0;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.quotes-carousel {
+  position: relative;
+  margin: 0 calc(-1 * clamp(16px, 4vw, 24px));
+  padding: 4px clamp(16px, 4vw, 24px) 8px;
+}
+
+.quotes-viewport[data-quotes-scroller] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(16px, 4vw, 24px);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.quotes-viewport[data-quotes-scroller]:focus-visible {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand-blue) 35%, transparent);
+  border-radius: var(--r-xl);
+}
+
+.quotes-viewport[data-quotes-scroller]::-webkit-scrollbar {
+  display: none;
+}
+
+.quotes-fade {
+  position: absolute;
+  top: 0;
+  bottom: 8px;
+  width: clamp(40px, 8vw, 72px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.quotes-fade--left {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-soft) 30%, transparent);
+}
+
+.quotes-fade--right {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg-soft) 30%, transparent);
+}
+
+.quotes-track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(16px, 2.4vw, 22px);
+  width: max-content;
+  padding: 8px 2px 20px;
+}
+
+.quote-slide {
+  --slide-accent: var(--brand-blue);
+  flex: 0 0 auto;
+  width: clamp(300px, 36vw, 380px);
+  scroll-snap-align: start;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 44px -36px rgba(15, 40, 68, 0.22);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.quote-slide--alt {
+  --slide-accent: var(--brand-green);
+}
+
+.quote-slide:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 56px -32px rgba(15, 40, 68, 0.28);
+}
+
+.quote-copy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 18px 20px;
+  min-width: 0;
+  border-top: 3px solid var(--slide-accent);
+}
+
+.quote-copy-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quote-avatar {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-soft);
+  border: 2px solid var(--line);
+  box-shadow: 0 4px 14px -8px rgba(15, 40, 68, 0.2);
+}
+
+.quote-avatar-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.quote-avatar-img--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.quote-avatar-img--fallback.av-lm {
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-green));
+}
+
+.quote-avatar-img--fallback.av-gd {
+  background: linear-gradient(135deg, var(--brand-green), var(--brand-blue-light));
+}
+
+.quote-avatar-img--fallback.av-bd {
+  background: linear-gradient(135deg, var(--blue-800), var(--brand-blue));
+}
+
+.quote-copy-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.quote-cohort-tag {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--slide-accent);
+  background: color-mix(in srgb, var(--slide-accent) 10%, var(--bg-soft));
+  border: 1px solid color-mix(in srgb, var(--slide-accent) 22%, var(--line));
+}
+
+.quote-copy-name {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.quote-copy-role {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.quote-copy-link {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--slide-accent);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.quote-copy-link:hover {
+  color: #fff;
+  background: var(--slide-accent);
+  border-color: var(--slide-accent);
+}
+
+.quote-copy-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.quote-copy-path span:first-child {
+  padding: 4px 8px;
+  border-radius: var(--r-pill);
+  background: var(--bg-soft);
+  color: var(--ink);
+}
+
+.quote-copy-path-arrow {
+  color: var(--brand-green);
+  font-weight: 800;
+}
+
+.quote-copy-path-after {
+  padding: 4px 8px;
+  border-radius: var(--r-pill);
+  background: var(--green-50);
+  color: var(--brand-blue);
+}
+
+.quote-copy-text {
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.quote-copy-text p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.quote-copy-text p::before {
+  content: '“';
+  margin-right: 2px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  color: var(--slide-accent);
+  opacity: 0.55;
+}
+
+.quotes-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -14px rgba(15, 40, 68, 0.25);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.quotes-nav:hover {
+  border-color: var(--brand-blue);
+  color: var(--brand-blue);
+}
+
+.quotes-nav--prev {
+  left: clamp(2px, 1vw, 8px);
+}
+
+.quotes-nav--next {
+  right: clamp(2px, 1vw, 8px);
+}
+
+.quotes-dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+  min-height: 10px;
+}
+
+.quotes-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--line);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s, width 0.2s;
+}
+
+.quotes-dot.is-active {
+  width: 20px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-green));
+}
+
+.quotes-hint {
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+}
+
+@media (max-width: 720px) {
+  .quote-slide {
+    width: min(88vw, 340px);
+  }
+}
+
+@media (max-width: 640px) {
+  .quotes-nav {
+    display: none;
+  }
+
+  .quotes-fade {
+    width: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quote-slide {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cohort-tab {
+    flex: 1 1 100%;
+  }
+
+  .roster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 400px) {
+  .roster-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── GELİNEN GEÇMİŞLER — beyaz zemin, SVG ikonlar ── */
+.paths {
+  background: var(--bg);
+}
+
+.paths-block {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 40px);
+}
+
+.paths-head {
+  margin-bottom: 0;
+  max-width: 720px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.paths-block.reveal-group.in .paths-head.reveal-child {
+  transition-delay: 0.04s;
+}
+
+.paths-block .path-card.reveal-child {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.paths-block.in .path-card.reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.paths-block.in .path-card.reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.paths-block.in .path-card.reveal-child:nth-child(2) { transition-delay: 0.16s; }
+.paths-block.in .path-card.reveal-child:nth-child(3) { transition-delay: 0.22s; }
+.paths-block.in .path-card.reveal-child:nth-child(4) { transition-delay: 0.28s; }
+
+.paths-head .sec-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.paths-intro {
+  margin-bottom: 0;
+}
+
+.paths-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.path-card {
+  padding: 28px 20px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+
+.path-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--blue-200);
+  box-shadow: 0 16px 32px -16px rgba(28, 113, 183, 0.18);
+}
+
+.path-card--cta {
+  border-style: dashed;
+  border-color: var(--green-200);
+  background: var(--green-50);
+}
+
+.path-card--cta:hover {
+  border-color: var(--green-500);
+  box-shadow: 0 16px 32px -16px rgba(66, 186, 109, 0.2);
+}
+
+.path-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.path-icon svg {
+  display: block;
+}
+
+.path-icon--blue {
+  background: var(--blue-50);
+  color: var(--brand-blue);
+}
+
+.path-icon--green {
+  background: var(--green-50);
+  color: var(--brand-green);
+}
+
+.path-card--cta .path-icon--green {
+  background: #fff;
+}
+
+.path-label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.path-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--brand-blue);
+  background: var(--blue-50);
+  border: 1px solid var(--blue-200);
+}
+
+.path-card--green .path-count {
+  color: var(--green-700);
+  background: var(--green-50);
+  border-color: var(--green-200);
+}
+
+.path-cta {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1.3;
+}
+
+.path-cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.path-card--cta:hover .path-cta-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .paths-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .paths-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>

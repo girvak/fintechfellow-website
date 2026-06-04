@@ -1,0 +1,16 @@
+node_modules
+dist
+.astro
+.vite
+.git
+.gitignore
+.DS_Store
+.env
+.env.*
+*.log
+coverage/
+.vercel
+.netlify
+.idea
+.cursor
+.claude

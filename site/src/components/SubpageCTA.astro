@@ -1,0 +1,37 @@
+---
+interface Props {
+  pill?: string | null;
+  title: string;
+  sub?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  sectionId?: string;
+}
+
+const {
+  pill = null,
+  title,
+  sub = '15 kişiye kadar alınacaktır · Ücretsiz başvuru',
+  ctaLabel = 'Hemen Başvur',
+  ctaHref = '/basvur',
+  sectionId,
+} = Astro.props;
+---
+
+<section class="sp-final" id={sectionId}>
+  <div class="container sp-final-inner reveal">
+    {
+      pill && (
+        <div class="sp-final-pill">
+          <span class="pulse-dot" />
+          {pill}
+        </div>
+      )
+    }
+    <h2 class="sp-final-title" set:html={title} />
+    {sub && <p class="sp-final-sub" set:html={sub} />}
+    <a href={ctaHref} class="btn-primary sp-final-btn">
+      {ctaLabel}
+    </a>
+  </div>
+</section>

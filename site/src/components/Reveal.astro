@@ -1,0 +1,37 @@
+<script>
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced) {
+    document.querySelectorAll('.reveal, .reveal-group').forEach((el) => el.classList.add('in'));
+  } else {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -4% 0px' },
+    );
+
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('.reveal, .reveal-group'));
+
+    const activateVisible = () => {
+      const vh = window.innerHeight * 0.92;
+      targets.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) {
+          el.classList.add('in');
+          obs.unobserve(el);
+        }
+      });
+    };
+
+    targets.forEach((el) => obs.observe(el));
+    activateVisible();
+    window.addEventListener('load', activateVisible, { once: true });
+    window.addEventListener('pageshow', activateVisible);
+  }
+</script>

@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Reveal from '../components/Reveal.astro';
+---
+
+<Base
+  title="İletişim — FintechFellow"
+  description="FintechFellow ile iletişime geç. Program hakkında soruların için bize yaz."
+>
+  <Nav darkHero />
+
+  <PageHero eyebrow="İletişim">
+    <Fragment slot="title">Soruların mı var?<br /><span class="g">Yazabilirsin.</span></Fragment>
+    <p slot="sub">Program hakkında aklındaki her şeyi sormaktan çekinme.</p>
+  </PageHero>
+
+  <section class="sp-section contact-body">
+    <div class="container contact-grid">
+
+      <div class="contact-channels">
+        <h2 class="channels-title">Bize Ulaş</h2>
+
+        <div class="channel-card">
+          <div class="channel-icon" aria-hidden="true">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="channel-label">E-posta</div>
+            <a href="mailto:info@girisimcilikvakfi.org" class="channel-value">info@girisimcilikvakfi.org</a>
+          </div>
+        </div>
+
+        <div class="channel-card">
+          <div class="channel-icon" aria-hidden="true">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="channel-label">Yanıt süresi</div>
+            <div class="channel-value">İş günü içinde 1–2 gün</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-faq">
+        <h2 class="faq-title">Sıkça Sorulan Sorular</h2>
+
+        <details class="faq-item">
+          <summary>Başvurmak için ne gerekiyor?</summary>
+          <p>18–27 yaş arasında olman ve yazılıma merakın yeterli. Üniversite şartı yok, bölüm şartı yok. Ön bilgi gerekmez.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Başvuru ücretsiz mi?</summary>
+          <p>Evet, program ücretsiz. Ayrıca program süresince aylık 20.000 TL burs alıyorsun — 9 ay boyunca toplam 180.000 TL.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Program nerede yapılıyor?</summary>
+          <p>42 Türkiye eğitimi İstanbul kampüsünde yüz yüze yürütülüyor. Fintech Fellow etkinlikleri ve buluşmaları ise dönem içinde hibrit olabilir.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>İş garantisi nasıl işliyor?</summary>
+          <p>Programı başarıyla tamamlayan her Fellow, Ödeal'da tam zamanlı yazılım geliştirici olarak işe başlıyor. Bu programın kuruluş amacı zaten Fellow'ların istihdamı.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Aynı anda üniversiteye devam edebilir miyim?</summary>
+          <p>Program tam zamanlı bir bağlılık gerektiriyor. Uzaktan eğitim veya esnek programlı üniversite öğrencileriyle bireysel olarak değerlendirme yapıyoruz — bize yaz.</p>
+        </details>
+
+        <div class="faq-cta">
+          <p>Başka soruların varsa:</p>
+          <a href="mailto:info@girisimcilikvakfi.org" class="inline-link">info@girisimcilikvakfi.org <span>↗</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <Reveal />
+  <Footer />
+</Base>
+
+<style>
+/* ── BODY ── */
+.contact-body { }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ── CHANNELS ── */
+.channels-title, .faq-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 28px;
+  color: var(--ink);
+}
+.channel-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  margin-bottom: 12px;
+}
+.channel-icon {
+  width: 42px; height: 42px;
+  border-radius: var(--r-md);
+  background: var(--blue-50);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue-500);
+  flex-shrink: 0;
+}
+.channel-label { font-size: 12px; color: var(--ink-soft); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; }
+.channel-value { font-size: 15px; color: var(--ink); font-weight: 500; line-height: 1.5; }
+.channel-value a { color: var(--blue-500); border-bottom: 1px solid currentColor; }
+.channel-value a:hover { color: var(--green-500); }
+
+/* ── FAQ ── */
+.faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+}
+.faq-item summary {
+  padding: 18px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--blue-500);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.faq-cta { margin-top: 32px; }
+.faq-cta p { font-size: 14px; color: var(--ink-soft); margin: 0 0 8px; }
+
+@media (max-width: 860px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+</style>
