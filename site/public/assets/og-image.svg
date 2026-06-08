@@ -40,5 +40,5 @@
 
   <!-- Bottom bar -->
   <rect x="0" y="580" width="1200" height="50" fill="rgba(0,0,0,0.2)"/>
-  <text x="72" y="612" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.55)">fintechfellow.com · Başvurular açık · 11 Haziran 2026</text>
+  <text x="72" y="612" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.55)">fintechfellow.org · Başvurular açık · 11 Haziran 2026</text>
 </svg>

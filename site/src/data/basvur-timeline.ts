@@ -97,7 +97,7 @@ export const timelineSteps: TimelineStep[] = [
             date: '6 Haziran 2026',
             time: '15.00',
             youtube: {
-              href: 'https://www.youtube.com/watch?v=UMcwh_V960A',
+              href: 'https://www.youtube.com/live/7t0fEnEVKtk',
               label: 'Canlı yayın',
             },
           },
@@ -106,7 +106,7 @@ export const timelineSteps: TimelineStep[] = [
             date: '7 Haziran 2026',
             time: '19.00',
             youtube: {
-              href: 'https://www.youtube.com/watch?v=7t0fEnEVKtk',
+              href: 'https://www.youtube.com/live/ODfcklSb2kE',
               label: 'Canlı yayın',
             },
           },

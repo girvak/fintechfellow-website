@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fintechfellow.com/sitemap-index.xml
+Sitemap: https://fintechfellow.org/sitemap-index.xml

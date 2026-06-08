@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://fintechfellow.com',
+  site: 'https://fintechfellow.org',
   integrations: [sitemap()],
   server: {
     host: '0.0.0.0',
