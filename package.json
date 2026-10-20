@@ -1,0 +1,8 @@
+{
+  "name": "fintechfellow-website",
+  "private": true,
+  "scripts": {
+    "build": "npm ci --prefix site && npm run build --prefix site",
+    "deploy": "npm run build && npx wrangler deploy"
+  }
+}
